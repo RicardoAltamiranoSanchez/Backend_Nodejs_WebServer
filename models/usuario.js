@@ -1,6 +1,7 @@
 //pára  crear los modelos de usuario y los campo que requerimos
 //mas informacion en la documentacion de mongoose
 const{Schema,model}=require("mongoose");
+//const { model } = require('mongoose');
 
 const UsuarioSchema= Schema({
     nombre:{
@@ -31,12 +32,19 @@ const UsuarioSchema= Schema({
    estado:{
     type:Boolean,
     default:true
-   },
+   }, 
    google:{
        type:Boolean,
        default:false
    }
 });
+//se puede crear metodos o sobreecribir metodos
+//debe ser una funcion normal
+UsuarioSchema.methods.toJSON= function(){
+const {__v,password,...usuario}=this.toObject();//es como si fuera objeto literal
+//quitamos eso valores despues lo almacenamos en usuario haciando destruracion
+return usuario;
+}
 module.exports=model("Usuario",UsuarioSchema);
 //para importar instanciamos el model y ponemos el nombre del campo que va ir y despues llamamos el objeto completo
 
