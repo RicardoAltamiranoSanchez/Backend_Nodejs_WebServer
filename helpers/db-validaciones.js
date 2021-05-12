@@ -18,9 +18,20 @@ const emailExiste = async(correo="") => {
     }
 }
 
+const idExiste=async (id) => {
+   
+    //buscamos el objeto findById es una funcion especial de mongo para buscar id
+    const existe=await Usuario.findById(id);
+    //indicamos si no existe  
+    if(!existe){
 
+      throw new Error(`este id no existe ${existe}`)
+      }
+
+}
 module.exports={
 
     rolValidacion,
-    emailExiste
+    emailExiste,
+    idExiste
 }

@@ -5,16 +5,38 @@ const { response, request } = require('express');
 const Usuario =require("../models/usuario");
 const bcryptjs = require('bcryptjs');//este es para poder encryptar la contraeña npm i bcryptjs
 
-const usuariosGet=(req=request,res=response)=>{
-    const query = req.query;//obtenemos ek valor donde esta la url desde  la query
+const usuariosGet= async (req=request,res=response)=>{
+    //const query = req.query;//obtenemos ek valor donde esta la url desde  la query
+    const{ limite=2,desde=0}=req.query;//hacemos destrution para obtener el valor de limtes
     //tambien se puede hacer destruturacion y poner valores por default ejemplo
     // const {id, nombre="no name",page, )
+     //obtenemos todos los usuarios
+    /* const usuarios= await Usuario.find()
+     .limit(Number(limite))//utilizamos limit igual que una basw de datso y lo convertimos enm numero;
+     .skip(Number(desde));//Inidicamos desde donde queremosn empezar
      
+     //para ver cuanto usuarios tenemos
+     const total =await Usuario.countDocuments();
+     *///en promise.all nos permite manda un arreglo con todas las promesas
+     //que quiero que se ejecuten   
+     //hacemos un query para obtener los valores activos 
+          const query ={estado:true}
+     const [total,usuarios]= await Promise.all([
+         //ponemos lo que quereoms obtener
+         Usuario.countDocuments(query),
+        Usuario.find(query)
+        .limit(Number(limite))
+        .skip(Number(desde))
+     ]);
+    /*res.status(200).json({
+      total,
+      usuarios
+    });*/
     res.status(200).json({
-
-        msg:"Desde get",
-        query
+        total,
+        usuarios
     });
+
 }
 
 const usuariosPut= async (req,res)=>{
@@ -23,7 +45,7 @@ const usuariosPut= async (req,res)=>{
     //ejemplo const {id,etc}=req.params;
   
     //Actualizamos sacamos el password y el correo y dejamos el resto con destrution
-    const {google,password,correo, ...resto}=req.body;
+    const { _id , google , password , correo , ...resto}=req.body;
     if(password){
     const salt = bcryptjs.genSaltSync();//encryptamos la contraseña 
     //luego hay problemas cuando intentamos inicial antes una varible antes de crearla
@@ -65,10 +87,19 @@ const usuariosPatch=(req=request,res=response)=>{
         msg:"Desde patch",
     })
 }
-const usuariosDelete=(req=request,res=response)=>{
+const usuariosDelete=async (req=request,res=response)=>{
+    //para eliminar usuario fisicamente pero no es conveniente por que se pierde
+    //despues lo que hizo
+    const {id} =req.params;
+
+   // const usuario=await Usuario.findByIdAndDelete(id);
     //es para eliminar datos
-        res.json({
-            msg:"desde delete",
+    //Eliminar usuaruio sin eliminar 
+    const usuario =await Usuario.findByIdAndUpdate(id,{estado:false}) 
+    //ponemos primero el id donde lo va buscar y luego decimos que va modificar
+    res.json({
+            msg:"Usuario eliminado",
+            usuario
         });
     }
 //siempre debemos impprtar lo que vamos a separar

@@ -1,8 +1,8 @@
 const {Router} = require('express');//metodo para poder usar los routers
 const { usuariosGet, usuariosPut, usuariosPost, usuariosPatch, usuariosDelete } = require('../controllers/usuarios');
-const { check } = require('express-validator');//es para hacer validaciones npm i express-validator
+const {check} = require('express-validator');//es para hacer validaciones npm i express-validator
 const {  validarCampos } = require('../middleware/validacion-campos');
-const {rolValidacion,emailExiste}=require('../helpers/db-validaciones');
+const {rolValidacion,emailExiste,idExiste}=require('../helpers/db-validaciones');
 //tiene la misma funcion de this.app
 //solo falta  importadaS en server para usarlas como un middleware bueno es un middleware 
 //mandamos a llamar la funcion Router
@@ -10,7 +10,15 @@ const router=Router();
 
 
 router.get('/',usuariosGet);
-router.put('/:id',usuariosPut);
+//hacemos validaciones para el id si existe o si es valido el id de mongo
+router.put('/:id',[
+    //aqui hacemos si el id es un valor de object
+check('id',"Este id no es valiudo").isMongoId(),
+//hacemos una vaidacion si existe el id
+check('id').custom(idExiste),
+check('rol').custom( rolValidacion),
+validarCampos
+],usuariosPut);
 //para meter una variable es o que lea una variable es con dos puntos y el id y alo puedes usar en el controlador
 router.post('/',[check('correo', 'El correo no es válido').isEmail(),
                  check('correo').custom(emailExiste),
@@ -31,7 +39,11 @@ router.post('/',[check('correo', 'El correo no es válido').isEmail(),
                 
 //importamos check y hacemos la validacion de correo 
 router.patch('/',usuariosPatch);
-router.delete('/',usuariosDelete);
+router.delete('/:id',[
+    check('id',"Este id no es valiudo").isMongoId(),
+    check('id').custom(idExiste),
+    validarCampos
+],usuariosDelete);
 
 
 //siempre debemos impprtar lo que vamos a separar
