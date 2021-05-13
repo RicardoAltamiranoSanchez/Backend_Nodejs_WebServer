@@ -5,7 +5,7 @@ const {validationResult} =require('express-validator'); //lo usamons para valida
 const validarCampos=(res,req,next)=>{
    const errores =validationResult(req);
    if(!errores.isEmpty()){
-     return res.status(400).json(errores);
+     return res.status(400).json({errores});
       
    }
    next();

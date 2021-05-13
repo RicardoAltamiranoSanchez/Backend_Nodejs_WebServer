@@ -8,7 +8,6 @@ const {rolValidacion,emailExiste,idExiste}=require('../helpers/db-validaciones')
 //mandamos a llamar la funcion Router
 const router=Router();
 
-
 router.get('/',usuariosGet);
 //hacemos validaciones para el id si existe o si es valido el id de mongo
 router.put('/:id',[

@@ -20,7 +20,7 @@ const usuariosGet= async (req=request,res=response)=>{
      *///en promise.all nos permite manda un arreglo con todas las promesas
      //que quiero que se ejecuten   
      //hacemos un query para obtener los valores activos 
-          const query ={estado:true}
+     const query ={estado:true}
      const [total,usuarios]= await Promise.all([
          //ponemos lo que quereoms obtener
          Usuario.countDocuments(query),

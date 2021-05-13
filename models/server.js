@@ -10,7 +10,9 @@ class Server{
        this.app=express();
        this.PORT=process.env.PORT;
        this.usuarioPath='/Api/Usuarios';    
+       this.tokenPath='/Api/authentication';
        this.Router();
+       
        //Conectando ala base de datos en mongo
        this.ConexionDB();
     //no ponemos el lsten en el constructor
@@ -22,6 +24,7 @@ class Server{
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
+      this.app.use(this.tokenPath,require('../Routers/auth'));
       this.app.use(this.usuarioPath,require('../Routers/usuarios')); 
       
     }
