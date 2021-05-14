@@ -40,9 +40,12 @@ const UsuarioSchema= Schema({
 });
 //se puede crear metodos o sobreecribir metodos
 //debe ser una funcion normal
+//se puede modifcar los metodos aqui y mostrar o no 
+//o poner nuevos parametros
 UsuarioSchema.methods.toJSON= function(){
-const {__v,password,...usuario}=this.toObject();//es como si fuera objeto literal
+const {__v,password,_id,...usuario}=this.toObject();//es como si fuera objeto literal
 //quitamos eso valores despues lo almacenamos en usuario haciando destruracion
+usuario.uid=_id;
 return usuario;
 }
 module.exports=model("Usuario",UsuarioSchema);

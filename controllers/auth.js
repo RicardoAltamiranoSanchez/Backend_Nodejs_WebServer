@@ -1,6 +1,8 @@
 const { response,request } = require('express');
 const Usuario =require("../models/usuario");
 const bcryptjs= require('bcryptjs');
+const {generarToken}=require('../helpers/token');
+const { validarToken } = require('../middleware/validar-token');
 
 const login = async(req, res = response) => {
      //hacemos una destruturacion obtenemos solo los campos que queremos
@@ -39,11 +41,11 @@ const login = async(req, res = response) => {
             });
         }
 
-        res.json({
-          msg:"Usuario correctos"
-        })
-
-        
+        const token = await validarToken( usuario.id );
+       res.status(200).json({
+             usuario,  
+             token
+       });
 
     } catch (error) {
         console.log(error)
