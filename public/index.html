@@ -4,11 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practica</title>
+    <title>PRACTICA EN NODE</title>
+    <meta name="google-signin-client_id" content="608502872708-dule95t196oera70u13o06vnr56dek82.apps.googleusercontent.com">
+
 </head>
 <body>
     <h1>SOlO ES PARA PRUEBA</h1>
     <hr>
-    <h1>Ricardo Altamirano Sanchez</h1>
+    <h1>Api google</h1>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
+    
+     <script type="text/javascript">
+
+      
+       console.log(window.location.hostname.includes('localhost'))
+
+       var url = ( window.location.hostname.includes('localhost') )
+            ? 'http://localhost:8080/Api/authentication/google'
+            : '';
+
+
+
+            
+
+
+
+
+            //Hacemos la validacion del token de google atravez de su api 
+            function onSignIn(googleUser) {
+                  var profile = googleUser.getBasicProfile();
+                  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                  console.log('Name: ' + profile.getName());
+                  console.log('Image URL: ' + profile.getImageUrl());
+                  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                 
+                  //nos devuelven el token de google para la autenticacion 
+                  var id_token = googleUser.getAuthResponse().id_token;
+                 const data ={id_token};
+                  
+                  
+                  console.log(id_token);
+                  fetch( url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify( data )
+            })
+            .then( resp => resp.json() )
+            .then( data => console.log( 'Nuestro server', data ) )
+            .catch( console.log );
+            
+        }
+                 //Aqui para salirno de la autenticacion del google
+                 function signOut() {
+                   var auth2 = gapi.auth2.getAuthInstance();
+                   auth2.signOut().then(function () {
+                   console.log('User signed out.');
+                   });
+                   }               
+     </script> 
+
+
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+           
+ 
 </body>
 </html>

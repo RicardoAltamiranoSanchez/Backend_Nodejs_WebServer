@@ -6,7 +6,7 @@ const validacionRol=require("../middleware/validar-role");
 //utilizamos este para destrution para no validar no llamar  a todos los parametros
 
 module.exports={
-...validarCampos,
-...validarToken,
+...validacionCampos,
+...validacionTokenn,
 ...validacionRol
 }

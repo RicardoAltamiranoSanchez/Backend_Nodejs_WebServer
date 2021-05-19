@@ -3,6 +3,7 @@ const Usuario =require("../models/usuario");
 const bcryptjs= require('bcryptjs');
 const {generarToken}=require('../helpers/token');
 const { validarToken } = require('../middleware/validar-token');
+const {verificacionGoogle} = require('../helpers/google-verificacion')
 
 const login = async(req, res = response) => {
      //hacemos una destruturacion obtenemos solo los campos que queremos
@@ -56,7 +57,32 @@ const login = async(req, res = response) => {
 
 }
 
+const googleSingin    =  async  (req,res=response) =>{
 
+
+
+              const {id_token}=req.body;
+
+              try {
+                const usuarioGoogle= await  verificacionGoogle(id_token)
+                console.log(usuarioGoogle);
+                res.status(200).json({
+                   msg:'Token valido de google',
+                   
+                })
+              } catch (error) {
+
+                console.log(error);
+                res.status(401).json({
+
+                    msg:'Token no reconocido'
+                })  
+              }
+
+
+
+}
 module.exports = {
-    login
+    login,
+    googleSingin
 }
