@@ -91,15 +91,21 @@ const usuariosDelete=async (req=request,res=response)=>{
     //para eliminar usuario fisicamente pero no es conveniente por que se pierde
     //despues lo que hizo
     const {id} =req.params;
-
+    //creamos una variable para obtener el uid que inicializamos en el validar -token
+    const uid=req.uid
    // const usuario=await Usuario.findByIdAndDelete(id);
     //es para eliminar datos
     //Eliminar usuaruio sin eliminar 
-    const usuario =await Usuario.findByIdAndUpdate(id,{estado:false}) 
+    const usuario =await Usuario.findByIdAndUpdate(id,{estado:false})
+    
+    //en req no lo obtenemos desde el validar token 
+    const usuarioAutenticado=req.usuario;
     //ponemos primero el id donde lo va buscar y luego decimos que va modificar
     res.json({
             msg:"Usuario eliminado",
-            usuario
+            usuario,
+            uid,
+            usuarioAutenticado
         });
     }
 //siempre debemos impprtar lo que vamos a separar

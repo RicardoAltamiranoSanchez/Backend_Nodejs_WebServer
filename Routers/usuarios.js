@@ -1,7 +1,20 @@
 const {Router} = require('express');//metodo para poder usar los routers
 const { usuariosGet, usuariosPut, usuariosPost, usuariosPatch, usuariosDelete } = require('../controllers/usuarios');
 const {check} = require('express-validator');//es para hacer validaciones npm i express-validator
-const {  validarCampos } = require('../middleware/validacion-campos');
+
+//const { validarCampos } = require('../middleware/validacion-campos');
+//const {validarToken}=require("../middleware/validar-token");
+//const {tieneRol}=require("../middleware/validar-role");
+
+//Segunda forma solo se tiene que hacer el index en el middleware
+const {
+
+    validarCampos,
+    validarToken,
+    tieneRol
+
+}=require('../middleware')
+
 const {rolValidacion,emailExiste,idExiste}=require('../helpers/db-validaciones');
 //tiene la misma funcion de this.app
 //solo falta  importadaS en server para usarlas como un middleware bueno es un middleware 
@@ -38,7 +51,9 @@ router.post('/',[check('correo', 'El correo no es válido').isEmail(),
                 
 //importamos check y hacemos la validacion de correo 
 router.patch('/',usuariosPatch);
-router.delete('/:id',[
+router.delete('/:id',[validarToken,
+//validarRole,
+tieneRol('SUPER_USER','VENTAS_ROL'),
     check('id',"Este id no es valiudo").isMongoId(),
     check('id').custom(idExiste),
     validarCampos

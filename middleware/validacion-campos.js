@@ -2,10 +2,10 @@
 const {validationResult} =require('express-validator'); //lo usamons para validar los parametros por eejmplo el email
 
 //hacemos la validacion  de los campos es una funcnion normal 
-const validarCampos=(res,req,next)=>{
+const validarCampos= (res,req,next) => {
    const errores =validationResult(req);
    if(!errores.isEmpty()){
-     return res.status(400).json({errores});
+     return res.status(400).json(errores);
       
    }
    next();

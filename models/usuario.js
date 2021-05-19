@@ -1,6 +1,6 @@
 //pára  crear los modelos de usuario y los campo que requerimos
 //mas informacion en la documentacion de mongoose
-const{Schema,model}=require("mongoose");
+const { Schema,model }=require("mongoose");
 //const { model } = require('mongoose');
 
 const UsuarioSchema= Schema({

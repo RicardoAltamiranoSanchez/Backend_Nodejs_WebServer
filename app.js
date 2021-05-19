@@ -11,3 +11,4 @@ console.log("Ricardo Altamiran");
 app.listen(process.env.PORT,()=>{ // asi llamas una variable de entorno  para utilizarla con process.env.variable
 console.log("Corriendo desde el puertoi",process.env.PORT);
 });
+//npm install  para recontruir el software

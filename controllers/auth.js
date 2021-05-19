@@ -40,8 +40,8 @@ const login = async(req, res = response) => {
                 msg: 'Usuario / Password no son correctos - password'
             });
         }
-
-        const token = await validarToken( usuario.id );
+      //verificar bien los nombres utilizamos el generar token del helpers 
+      const token = await generarToken( usuario.id );
        res.status(200).json({
              usuario,  
              token
