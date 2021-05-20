@@ -26,8 +26,10 @@ const UsuarioSchema= Schema({
    },
    rol:{
         type:String,
+       
         require:[true,"Se requiere el rol de la persona"],
-        emun:['ADMIN_ROLE','USER_ROLE']//el emun indicamos los roles que tenemos oara ingresar
+        emun:['ADMIN_ROLE','USER_ROLE'],//el emun indicamos los roles que tenemos oara ingresar
+        default:'USER_ROLE'
    },
    estado:{
     type:Boolean,

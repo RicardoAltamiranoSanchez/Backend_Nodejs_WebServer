@@ -56,20 +56,55 @@ const login = async(req, res = response) => {
     }   
 
 }
-
-const googleSingin    =  async  (req,res=response) =>{
-
-
-
+//Verificar la autehnticacion de google
+const googleSingin = async(req,res=response) =>{
+            //obtenemos el token desde el body
               const {id_token}=req.body;
-
+                //hacemos un try catch por si hay errores
               try {
-                const usuarioGoogle= await  verificacionGoogle(id_token)
-                console.log(usuarioGoogle);
-                res.status(200).json({
-                   msg:'Token valido de google',
-                   
-                })
+                  //hacemos destrution para solo obtener los valores que requerimos y enviamos el token 
+                  //ala funcion de verificar que esta en el helpers 
+                const {nombre,img,correo}= await  verificacionGoogle(id_token);
+                //buscamos al usuario por el findOne por el correo si existe 
+                let usuario=await Usuario.findOne({correo});
+                //si no existe guardamos su informacion en un nuevo registro
+                if(!usuario){
+                  //creamos un objeto para crear la nueva informacion propeniente de google solo llenamos los campos que no falten
+                    const data={
+                        nombre,
+                        correo,
+                        img,
+                        password:'google',
+                        google:'true'
+                    }
+                    //guardamos el usuario en la base de datos
+                    return  usuario= new Usuario(data);
+                    await usuario.save();
+                }
+              //si el usuario esta eliminado es decir que si existe pero su estado es false lo bloqueamos
+                if(!usuario.estado){
+                    return res.status(400).json({
+                    msg:"Usuario bloqueado"
+
+                    })
+                }
+
+
+                
+                     //verificar bien los nombres utilizamos el generar token del helpers 
+                     const token = await generarToken( usuario.id );
+                         
+                    res.status(200).json({
+                        msg:'Token valido de google',
+                        usuario,
+                        token
+                        
+                     })
+                
+                
+
+
+                  
               } catch (error) {
 
                 console.log(error);
@@ -78,9 +113,6 @@ const googleSingin    =  async  (req,res=response) =>{
                     msg:'Token no reconocido'
                 })  
               }
-
-
-
 }
 module.exports = {
     login,

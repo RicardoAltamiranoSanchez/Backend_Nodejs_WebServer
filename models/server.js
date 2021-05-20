@@ -9,9 +9,17 @@ class Server{
     constructor(){
        this.app=express();
        this.PORT=process.env.PORT;
-       this.usuarioPath='/Api/Usuarios';    
-       this.tokenPath='/Api/authentication';
-       this.Router();
+       //Creamos los paths en un objeto para no hacer lo tan tardo
+       this.Paths={
+        usuarios:'/Api/Usuarios',
+        autenticacion:'/Api/authentication',
+        categorias:'/Api/categorias'
+       }
+       //los path de forma de uno a uno
+      // this.usuarioPath='/Api/Usuarios';    
+      // this.tokenPath='/Api/authentication';
+       
+      this.Router();
        
        //Conectando ala base de datos en mongo
        this.ConexionDB();
@@ -24,8 +32,9 @@ class Server{
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
-      this.app.use(this.tokenPath,require('../Routers/auth'));
-      this.app.use(this.usuarioPath,require('../Routers/usuarios')); 
+      this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
+      this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
+      this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
       
     }
     async  ConexionDB(){

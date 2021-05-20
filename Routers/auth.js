@@ -13,7 +13,7 @@ validarCampos],login);
 
 
 
-
+//es para la authenticacion de google utilizando su api  de out2
 router.post('/google',[
    check('id_token','Requieren token').not().isEmpty()
 ],googleSingin);
