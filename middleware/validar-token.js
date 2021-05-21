@@ -39,9 +39,10 @@ const validarToken= async (req=request,res=response,next) => {
                msg:"El usuario esta false"
            })
        }
-         req.id=usuario;
+       //lo guardamos en una varible  para despues utilizarla en otras plantillas por ejemplo en la de categoria
+         req.usuario=usuario;
 
-         console.log(req.id);
+         console.log(req.usuario);
         
     } catch (error) {
         console.log(error);

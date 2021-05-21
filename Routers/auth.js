@@ -1,6 +1,6 @@
 
 const{Router}= require('express');
-const { check } = require('express-validator');
+const {check} = require('express-validator');
 const {login,googleSingin}=require('../controllers/auth');
 const {validarCampos}=require('../middleware/validacion-campos');
 
@@ -15,7 +15,7 @@ validarCampos],login);
 
 //es para la authenticacion de google utilizando su api  de out2
 router.post('/google',[
-   check('id_token','Requieren token').not().isEmpty()
+   check('nombre','El nombre es obligatorio').not().isEmpty(),
 ],googleSingin);
 
 module.exports= router;

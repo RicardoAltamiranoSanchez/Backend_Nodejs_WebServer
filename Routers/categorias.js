@@ -6,32 +6,21 @@ const {
     validarToken,
     tieneRol
 
-}=require('../middleware')
+}=require('../middleware');
 
 const {rolValidacion,emailExiste,idExiste}=require('../helpers/db-validaciones');
+const {agregarCategoria,obtenerCategorias,obtenerCategoria}=require('../controllers/categorias');
 
 
 const router =Router();
-//obtenenoms toodos los usuarios de la base de  datos -pubicas
-router.get('/',(req,res)=>{
-    res.json({
-        msg:"Desde el get"
-    })
-
-});
+//obtenenoms toodos los usuarios de la base de  datos -publicas
+router.get('/',obtenerCategorias);
 //Obtenemos solo un id especivico -publico
-router.get('/:id',(req,res)=>{
-    res.json({
-        msg:"Desde el segundo get"
-    })
-})
+router.get('/:id',obtenerCategoria);
 //Crear  categoria -privado cualquier persona con token valido
-router.post('/:id',(req,res)=>{
-
-    res.json({
-        msg:"Desde el post"
-    })
-})
+router.post('/',[validarToken,
+  check('nombre',"Es obligatorio el nombre").not().isEmpty(),validarCampos],agregarCategoria
+)
 //Actualizar -publico- conquier es toke valido
 router.put('/:id',(req,res)=>{
     res.json({
@@ -46,3 +35,4 @@ router.delete('/:id',(req,res)=>{
 })
 
 module.exports=router;
+ 

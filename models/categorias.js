@@ -5,7 +5,8 @@ const{Schema,model}=require('mongoose');
 const SchemaCategoria=Schema({
     nombre:{
         type:String,
-        required:[true,'Es obligatorio']
+        required:[true,'Es obligatorio'],
+        unique:true
     },
     estado:{
         type:Boolean,
