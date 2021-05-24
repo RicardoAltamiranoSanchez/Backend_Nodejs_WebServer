@@ -10,6 +10,7 @@ try {
     const nombre =req.body.nombre.toUpperCase();
     //creamos una variable con el nombre de categoria y buscamos en la bd de categoria por el nombre aver si existe
     const categoriadb=await Categoria.findOne({nombre});
+                           
      
    //si existe ya la categoria respondemos un mensaje que si existe
     if(categoriadb){
@@ -61,23 +62,22 @@ const obtenerCategorias = async (req,res=response)=>{
           categoria
          })
 
-
     } catch (error) {
      console.log(`Ocurrio un error ${error}`);       
     }
-
-
-
-
 }
-const obtenerCategoria=async (req,res=response) => {
 
-     
+const obtenerCategoria=async (req,res=response) => {
 
 
     try {
-        const {id}=req.query;
-        const categoria=await Categoria.findById({id});
+        //el req.paramas es mas para el id o el headers y el query es cuando pones el nombre en los headers
+        const {id}=req.params;
+        console.log(id);
+        //para usar el objetid en una busqueda se pone sin llaves
+        const categoria=await Categoria.findById(id)
+                              .populate('usuario','nombre');//el populate es una funcion de moongose te da los valores que pidas
+
         return   res.status(200).json({
             msg:`Categoria seleccionada` ,
             categoria
@@ -90,8 +90,55 @@ const obtenerCategoria=async (req,res=response) => {
 }
 
 
+const actualizarCategoria= async (req,res=response) => {
+           
+    try {
+        //se debe poner el destrution no una variable por que sale errores importante
+        const {id}=req.params;
+           console.log(id);
+           const {estado,usuario ,...resto}=req.body;
+           if(resto.nombre){
+            resto.nombre=resto.nombre.toUpperCase()
+           }
+
+           resto.usuario=req.usuario._id;
+           //el new:true es para que mande siempre el nuevo documento actualizado
+           const categoria=  await Categoria.findByIdAndUpdate(id,resto,{new:true});          
+           return res.status(200).json({
+          msg:"Actualizacion lista",
+          categoria
+
+        })
+
+    
+        
+    } catch (error) {
+        console.log(`hubo un error ${error}`)
+        
+    }
+      
+          
+}
+const borrarCategoria=async (req,res=response)=>{
+
+//obtenemos el valor en el header 
+    const {id}=req.params;
+    //lo eliminamos en false 
+    const query={estado:false
+    };
+    const categoria=await Categoria.findByIdAndUpdate(id,query,{new:true});
+    return res.status(201).json({
+
+        msg:"Categoria eliminada",
+        categoria
+    }) 
+
+
+}
 module.exports={
     agregarCategoria,
     obtenerCategorias,
-    obtenerCategoria
+    obtenerCategoria,
+    actualizarCategoria,
+    borrarCategoria
 }

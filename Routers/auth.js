@@ -16,6 +16,7 @@ validarCampos],login);
 //es para la authenticacion de google utilizando su api  de out2
 router.post('/google',[
    check('nombre','El nombre es obligatorio').not().isEmpty(),
+   
 ],googleSingin);
 
 module.exports= router;
