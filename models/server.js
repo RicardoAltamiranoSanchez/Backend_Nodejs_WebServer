@@ -13,18 +13,17 @@ class Server{
        this.Paths={
         usuarios:'/Api/Usuarios',
         autenticacion:'/Api/authentication',
+        produ:'/Api/productos',
         categorias:'/Api/categorias'
        }
        //los path de forma de uno a uno
       // this.usuarioPath='/Api/Usuarios';    
       // this.tokenPath='/Api/authentication';
-       
       this.Router();
-       
-       //Conectando ala base de datos en mongo
-       this.ConexionDB();
+     //Conectando ala base de datos en mongo
+     this.ConexionDB();
     //no ponemos el lsten en el constructor
-       this.Middlewares();
+    this.Middlewares();
     }
     Router(){
       //Aqui usamos el middeware y el path que creamos para para no tener un codigo largo
@@ -35,6 +34,8 @@ class Server{
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
       this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
       this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
+      this.app.use(this.Paths.produ,require('../Routers/productos'));
+
       
     }
     async  ConexionDB(){

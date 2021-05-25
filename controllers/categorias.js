@@ -71,7 +71,7 @@ const obtenerCategoria=async (req,res=response) => {
 
 
     try {
-        //el req.paramas es mas para el id o el headers y el query es cuando pones el nombre en los headers
+        //el req.paramas es mas para el id o el headers y el query es cuando pones el nombre en los headers se hace una destrutration o como se llame se pone corchetes
         const {id}=req.params;
         console.log(id);
         //para usar el objetid en una busqueda se pone sin llaves
