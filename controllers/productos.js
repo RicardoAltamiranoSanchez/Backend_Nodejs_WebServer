@@ -1,33 +1,51 @@
 const {response,request}=require('express');
-const {Categoria,Producto}=require('../models')
+const {Categoria,Producto}=require('../models');
 
 
 const obtenerProductos=async  (req,res)=>{
 
-    const nombre=req.body;
-
-    const producto= await Producto.find(nombre);
+      try {        
+    const {limite=10,desde=0}=req.query;
+    const query={estado:true};
+    const [total,productos]=await Promise.all([
+                    Producto.countDocuments(query),
+                    Producto.find(query)
+                    .populate('usuario','nombre')
+                    .populate('categoria','nombre')
+                    .skip(desde)
+                    .limit(limite)
+    ]);
     return res.status(200).json({
-        msg:`Producto Seleccion ${producto.nombre}`,
-        producto
+        msg:`Todos los productos registrados ${total}`,
+        productos 
     })
+         } catch (error) {
+          console.log(`Hubo un errro ${error}`)
+          }
+
+
 }
 
 const crearProducto=async (req,res) => {
       try {
-
-       
+   
+ 
       const {estado,usuario,...resto}=req.body;
-      const existeProducto=await Producto.find({nombre:req.body.nombre})
+      const nombre =resto.nombre;
+      console.log(nombre);
+      const existeProducto=await Producto.findOne({nombre});
+
       if(existeProducto){
            return res.status(201).json({
                msg:`Este producto ya existe ${existeProducto}`,
        })         
       }
+  
       const data={
           ...resto,
-          nombre: resto.nombre.toUpperCase(),
-          usuario=req.usuario.id
+          nombre:nombre.toUpperCase(),
+          categoria:req.params.id,
+          usuario:req.usuario._id
       }
 
       const producto= new Producto(data);
@@ -45,13 +63,74 @@ const crearProducto=async (req,res) => {
       } catch (error) {
          console.log(`Ocurrio un error ${error}`); 
       }
+}
+const obtenerProducto=async (req,res) => {
 
 
-
-
+    const {id}=req.params;
+    const producto=await Producto.findById(id)
+                         .populate('usuario','nombre')
+                        .populate('categoria','nombre');
+    if(!producto){
+        return res.status(400).json({
+         msg:`No existe id de este producto ${id}`
+        })
+    }
+   
+    return res.status(200).json({
+    
+          msg:`Producto seleccionado ${producto.nombre}`,
+          producto
+         
+    })
 }
 
-module.exports={
+const actualizarProducto=async (req,res) => {
+   try {
 
-    crearProducto
+      
+   const {id}=req.params
+   const {estado,usuario,...resto}=req.body;
+   if(resto.nombre){
+
+       resto.nombre=resto.nombre.toUpperCase();
+    }
+    resto.usuario=req.usuario._id;
+   
+   const productoActualizado= await Producto.findByIdAndUpdate(id,resto,{new:true}); 
+    return res.status(201).json({
+
+      msg:`Producto Actuliado Correctamente`,
+      productoActualizado
+    })
+
+   } catch (error) {
+    console.log(`Hubo un error ${error}`)   
+   }
+}
+
+const eliminarProducto=async (req,res) => {
+
+    try {
+     const {id}=req.params;
+     const productoEliminado=await Producto.findByIdAndUpdate(id,{estado:false},{new:true});
+   
+     return res.status(200).json({
+   
+   
+          msg:`Producto ${productoEliminado.nombre} Eliminado`
+     })
+    } catch (e) {
+        console.log(` Algo salio mal ${e} `)
+        
+    }
+   }
+
+
+module.exports={
+    obtenerProductos,
+    crearProducto,
+    obtenerProducto,
+    actualizarProducto,
+    eliminarProducto
 }

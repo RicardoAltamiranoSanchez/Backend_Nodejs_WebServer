@@ -75,7 +75,7 @@ const usuariosPost= async (req ,res=response) => {
      //es un objeto usuario
      await usuario.save();
      res.json({
-        msg:"Desde post",
+        msg:"Su registro fue hecho correctamente",
         usuario 
     });
     console.log(Usuario)

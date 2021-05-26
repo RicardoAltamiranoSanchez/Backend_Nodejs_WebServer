@@ -30,6 +30,7 @@ const validarRole=  (req=request,res=response,next)=>{
 const tieneRol = (...roles)=>{
     //esto es para poder obtener valores desde afuera de middleware
     return (req=request,res=response,next)=>{
+        
             if(!req.usuario){
              return res.status(500).json({
                  msg:"Aun no haz validado el token"
