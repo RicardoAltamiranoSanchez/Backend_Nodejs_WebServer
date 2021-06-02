@@ -56,6 +56,8 @@ const login = async(req, res = response) => {
     }   
 
 }
+
+
 //Verificar la autehnticacion de google
 const googleSingin = async(req,res=response) =>{
             //obtenemos el token desde el body

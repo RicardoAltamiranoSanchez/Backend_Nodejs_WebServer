@@ -7,6 +7,7 @@ const {crearProducto,
        actualizarProducto,
       eliminarProducto
 }=require('../controllers/productos');
+const {existeCategoriaPorId}=require('../helpers/db-validaciones');
 const{validarToken}=require('../middleware')
 
 const router=Router();
@@ -17,7 +18,7 @@ router.get('/:id',[
     validarCampos
 ],obtenerProducto);
 
-router.post('/:id',[validarToken],crearProducto);
+router.post('/:id',[validarToken,existeCategoriaPorId],crearProducto);
 
 router.put('/:id',[check('id','Esto es un id de mongo').not().isMongoId(),validarToken],actualizarProducto);
 

@@ -1,0 +1,87 @@
+{
+"vistaConfigurada":{
+    "id":77,
+    "nombre":"vc_empleado",
+    "caption":"Empleado",
+    "descripcion": "Base de empleados",
+    "owner":"dbo",
+    "tablaPrincipal":"APPVC_14_empleado",
+    "ubicaciones":1,
+    "extended":false,
+    "muestraVistas":true,
+    "fn_calculados":"",
+    "tieneHistoria":false,
+    "stage":false,
+    "habilitadosEstatusCaulitativo":false,
+    "relacionMasterDetail":false,
+    "master_extended":false,
+    "vistaProceso":false,
+    "fechaCreacion":"0001-01-01T00:00:00",
+    "fechaUltimaModificacion":"2021-02-09T15:31:52",
+    "estatus":"Activo",
+    "manejoStoredProcedure":false,
+    "usuarioCreacion":"many",
+    "usuarioUltimaModificacion":"many",
+    "manejoXML":false,
+    "tipo":"vc"
+                      },
+   "ubicaciones":{
+       "id":1,
+       "nombre":"Datos Empleado",
+       "orden":1,
+       "disponible":true
+   },
+   "campo":[{
+       "id":1,
+       "controlNombre":"vc_empleado_TXT_1",
+       "nombre":"ID",
+       "etiqueta":"ID",
+       "soloLectura":false,
+       "autonumerico":false,
+       "llavePrimaria":true,
+       "participa":true,
+       "visible":"False",
+       "perimteNulos":false,
+       "precision":0,
+       "longitud":18,
+       "valorNuloDefault":0,
+       "archivosPermitidos":"*.*",
+       "descripcion":"Identificado de la tabla",
+       "visibleConsulat":true,
+       "isTextoMultiLine":false,
+       "tag":"",
+       "habilita":true,
+       "requerido":false,
+       "parametro":"",
+       "tipoDato":"numeric",
+       "tipoValidacion":0,
+       "consultaAgrupar":"False",
+       "consultarAgruparTipo":null,
+       "consultaAgruparMascar":0,
+       "cr_nombre":"",
+       "cr_dataField":"",
+       "cr_dataText":"",
+       "isRelacionado":false,
+       "cr_instancia":"",
+       "valorDiscreto":"",
+       "isVd":false,
+       "fuenteDatos":13,
+       "ubicacion":1,
+       "control":"TextBox",
+       "cssClass":"",
+       "toolTip":"",
+       "width":0,
+       "height":0,
+       "formato":"",
+       "isSemaforo":false,
+       "semaforoBloque":"",
+       "semaforoVista":"color"   
+
+   }]
+                      
+
+
+
+
+
+}

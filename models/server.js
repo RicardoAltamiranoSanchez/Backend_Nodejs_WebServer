@@ -11,10 +11,12 @@ class Server{
        this.PORT=process.env.PORT;
        //Creamos los paths en un objeto para no hacer lo tan tardo
        this.Paths={
-        usuarios:'/Api/Usuarios',
-        autenticacion:'/Api/authentication',
-        produ:'/Api/productos',
-        categorias:'/Api/categorias'
+
+           usuarios:'/Api/Usuarios',
+           buscar:'/Api/buscar',
+           autenticacion:'/Api/authentication',
+           produ:'/Api/productos',
+           categorias:'/Api/categorias'
        }
        //los path de forma de uno a uno
       // this.usuarioPath='/Api/Usuarios';    
@@ -32,6 +34,7 @@ class Server{
       //solo debemos poner el path
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
+      this.app.use(this.Paths.buscar,require('../Routers/buscar'));
       this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
       this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
       this.app.use(this.Paths.produ,require('../Routers/productos'));

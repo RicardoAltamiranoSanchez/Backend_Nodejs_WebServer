@@ -44,10 +44,8 @@ const crearProducto=async (req,res) => {
       const data={
           ...resto,
           nombre:nombre.toUpperCase(),
-          categoria:req.params.id,
           usuario:req.usuario._id
       }
-
       const producto= new Producto(data);
       await producto.save();
       

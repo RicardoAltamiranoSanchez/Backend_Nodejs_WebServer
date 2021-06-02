@@ -2,7 +2,6 @@
 //mas informacion en la documentacion de mongoose
 const { Schema,model }=require("mongoose");
 //const { model } = require('mongoose');
-
 const UsuarioSchema= Schema({
     nombre:{
         type:String,
