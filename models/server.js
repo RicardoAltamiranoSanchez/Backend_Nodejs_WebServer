@@ -48,8 +48,26 @@ class Server{
     Middlewares() {
     
         this.app.use(express.static('public'));
-        //la serializamos en formatto json para poder trabajar en json        
-        this.app.use(cors());
+       // la serializamos en formatto json para poder trabajar en json        
+     
+     //Esta funcion nos permite que solo se vea en frontend la informacion y se pueda manejar desde ahi la informacion vale   
+    //    const whitelist =['http://localhost:3000'];
+    //     const corsOptions ={
+    //     origin:(origin,callback)=>{
+    //        const existe=whitelist.some(dominio => dominio === origin);
+    //        if(existe){
+
+    //           callback(null,true);
+    //        }else{
+    //            callback(new Error('No permitido por cors'))
+
+    //        }
+
+    //     }
+
+    //      }
+    //     this.app.use(cors(corsOptions));
+         this.app.use(cors());
         
     }
 

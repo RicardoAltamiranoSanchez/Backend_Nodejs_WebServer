@@ -7,7 +7,7 @@ const bcryptjs = require('bcryptjs');//este es para poder encryptar la contraeñ
 
 const usuariosGet= async (req=request,res=response)=>{
     //const query = req.query;//obtenemos ek valor donde esta la url desde  la query
-    const{ limite=2,desde=0}=req.query;//hacemos destrution para obtener el valor de limtes
+    const{ limite,desde=0}=req.query;//hacemos destrution para obtener el valor de limtes
     //tambien se puede hacer destruturacion y poner valores por default ejemplo
     // const {id, nombre="no name",page, )
      //obtenemos todos los usuarios

@@ -11,5 +11,5 @@ server.Listen();
 
 
 //instalar el express validator npm i express-validator para las validaciones 
-
+//instalar el package.json con npm init -y
 

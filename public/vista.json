@@ -31,7 +31,7 @@
        "orden":1,
        "disponible":true
    },
-   "campo":[{
+   "campos":[{
        "id":1,
        "controlNombre":"vc_empleado_TXT_1",
        "nombre":"ID",
@@ -77,7 +77,8 @@
        "semaforoBloque":"",
        "semaforoVista":"color"   
 
-   }]
+   }],
+   "conexion":13
                       
 
 

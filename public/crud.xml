@@ -1,4 +1,4 @@
-<vistaConfigurada id="77" nombre="vc_empleado" caption="Empleado" descripcion="Base de empleados" owner="dbo" tablaPrincipal="APPVC_14_empleado" ubicaciones="1" extended="False" muestraVista="True" fn_calculados="" tieneHistoria="False" stage="False" habilitadoEstatusCualitativo="False" relacionMasterDetail="False" master_extended="False" vistaProceso="False" fechaCreacion="0001-01-01T00:00:00" fechaUltimaModificacion="2021-02-09T15:31:52" estatus="Activo" manejoStoredProcedure="False" usuarioCreacion="many" usuarioUltimaModificacion="many" manejoXML="False" tipo="vc">
+  <vistaConfigurada id="77" nombre="vc_empleado" caption="Empleado" descripcion="Base de empleados" owner="dbo" tablaPrincipal="APPVC_14_empleado" ubicaciones="1" extended="False" muestraVista="True" fn_calculados="" tieneHistoria="False" stage="False" habilitadoEstatusCualitativo="False" relacionMasterDetail="False" master_extended="False" vistaProceso="False" fechaCreacion="0001-01-01T00:00:00" fechaUltimaModificacion="2021-02-09T15:31:52" estatus="Activo" manejoStoredProcedure="False" usuarioCreacion="many" usuarioUltimaModificacion="many" manejoXML="False" tipo="vc">
   <ubicaciones>
     <campo id="1" nombre="Datos Empleado" orden="1" disponible="True" />
   </ubicaciones>
@@ -58,6 +58,6 @@
   </campos>
   <camposCalculados />
   <fuenteDatos>
-  <conexion id="13" />
-  </fuenteDatos>
+   <conexion id="13" />
+</fuenteDatos>
 </vistaConfigurada>

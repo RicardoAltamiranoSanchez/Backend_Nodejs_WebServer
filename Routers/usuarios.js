@@ -46,7 +46,7 @@ router.post('/',[check('correo', 'El correo no es válido').isEmail(),
                 //check('rol').custom((rol)=> rolValidacion(rol))
                 //si va hacer el mismo parametro es decir el rol y el, que se va enviar
                 // se puede dejar solo asi check('rol').custom( rolValidacion)
-                check('rol').custom( rolValidacion),
+               
             validarCampos],usuariosPost)
                 
 //importamos check y hacemos la validacion de correo 
