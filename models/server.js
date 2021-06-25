@@ -38,8 +38,6 @@ class Server{
       this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
       this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
       this.app.use(this.Paths.produ,require('../Routers/productos'));
-
-      
     }
     async  ConexionDB(){
            await dbConnection();
@@ -70,14 +68,11 @@ class Server{
          this.app.use(cors());
         
     }
-
     Listen(){
-
-        this.app.listen(this.PORT,() => {
+         this.app.listen(this.PORT,() => {
          console.log("ejecutando la aplicacion desde ek puerto",this.PORT);   
-        })
+                })
     }
-
 }
 
 

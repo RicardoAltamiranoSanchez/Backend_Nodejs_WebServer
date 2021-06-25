@@ -7,6 +7,9 @@ const bcryptjs = require('bcryptjs');//este es para poder encryptar la contraeñ
 
 const usuariosGet= async (req=request,res=response)=>{
     //const query = req.query;//obtenemos ek valor donde esta la url desde  la query
+    try {
+        
+    
     const{ limite,desde=0}=req.query;//hacemos destrution para obtener el valor de limtes
     //tambien se puede hacer destruturacion y poner valores por default ejemplo
     // const {id, nombre="no name",page, )
@@ -36,6 +39,9 @@ const usuariosGet= async (req=request,res=response)=>{
         total,
         usuarios
     });
+} catch (error) {
+        console.log(`Hubo un error al momento de obtener la informacion de los usuarios${error}`);
+}
 
 }
 
@@ -65,8 +71,8 @@ const usuariosPost= async (req ,res=response) => {
     
     //const mensaje =req.body;//es para recibir los datos desde el cliente  se puede hacer destruturacion en ello
      //pero primero debes usar el middleware de express.json()
-     const { nombre, correo, password, rol} = req.body;
-     const usuario = new Usuario({ nombre, correo, password, rol });
+     const { nombre, correo, password, rol,descripcion} = req.body;
+     const usuario = new Usuario({ nombre, correo, password, rol,descripcion });
      const salt = bcryptjs.genSaltSync();//encryptamos la contraseña 
      usuario.password = bcryptjs.hashSync( password, salt );//utlizamos para encryptar la contraseña 
     //validacion  de correo

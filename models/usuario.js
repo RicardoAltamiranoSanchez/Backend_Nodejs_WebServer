@@ -19,9 +19,18 @@ const UsuarioSchema= Schema({
        require:[true,"El password es obligatorio"]
 
    },
+   telefono:{
+       type:Number,
+       unique:true
+   },
    img:{
       type:String
 
+   },
+   descripcion:{
+      type:String, 
+ require:[true,"se requiere una descripcion del usuario que intentas ingresar"],
+        
    },
    rol:{
         type:String,
