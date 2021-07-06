@@ -67,12 +67,17 @@ const usuariosPut= async (req,res)=>{
     });
 }
 const usuariosPost= async (req ,res=response) => {
-    
-    
+    try {
+        
     //const mensaje =req.body;//es para recibir los datos desde el cliente  se puede hacer destruturacion en ello
      //pero primero debes usar el middleware de express.json()
+    
      const { nombre, correo, password, rol,descripcion} = req.body;
-     const usuario = new Usuario({ nombre, correo, password, rol,descripcion });
+     console.log(req.body);
+     console.log(`Aqui desde antes de registrarse el usuario en body ${req.body}`);
+ 
+     const usuario = new Usuario({nombre,correo, password,rol,descripcion});
+     console.log(usuario);
      const salt = bcryptjs.genSaltSync();//encryptamos la contraseña 
      usuario.password = bcryptjs.hashSync( password, salt );//utlizamos para encryptar la contraseña 
     //validacion  de correo
@@ -85,6 +90,11 @@ const usuariosPost= async (req ,res=response) => {
         usuario 
     });
     console.log(Usuario)
+        
+    } catch (error) {
+        console.log(`Hubo un error inesperado checalo con el administrador ${error}`)
+        
+    }    
 }
 
 const usuariosPatch=(req=request,res=response)=>{

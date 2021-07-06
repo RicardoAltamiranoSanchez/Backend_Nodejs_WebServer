@@ -6,34 +6,43 @@ const UsuarioSchema= Schema({
     nombre:{
         type:String,
         //el requiere quiere decir que es necesario y  Adentro del cochetes ponemos un mensaje cuando no se cumpla
-        require:[true,"El nombre es obligatorio"]
+        require:[true,"El nombre es obligatorio"],
+        trim:true,
+        
     },
     correo:{
         type:String,
         require:[true,"El correo es obligatorio"],
+        trim:true,
         //el unique es para decir que no puede haber correos repetidos
-        unique:true
+        unique:true,
+    
+
     },
    password:{
        type:String,
-       require:[true,"El password es obligatorio"]
+       trim:true,
+       require:[true,"El password es obligatorio"],
+      
 
    },
-   telefono:{
-       type:Number,
-       unique:true
-   },
+
    img:{
-      type:String
+      type:String,
+      trim:true,
+      
 
    },
    descripcion:{
       type:String, 
+      trim:true,
  require:[true,"se requiere una descripcion del usuario que intentas ingresar"],
+ 
         
    },
    rol:{
         type:String,
+        trim:true,
        
         require:[true,"Se requiere el rol de la persona"],
         emun:['ADMIN_ROLE','USER_ROLE'],//el emun indicamos los roles que tenemos oara ingresar

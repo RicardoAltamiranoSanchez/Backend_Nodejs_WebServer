@@ -1,6 +1,7 @@
 const express=require('express');
 const cors=require('cors');
 const {dbConnection}=require ("../database/config")
+const bodyParser = require('body-parser');
 
 //estatus de error para regresar esos valores
 //res.status(200).json({msg:"Mensaje",})
@@ -33,6 +34,7 @@ class Server{
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
+
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
       this.app.use(this.Paths.buscar,require('../Routers/buscar'));
       this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
