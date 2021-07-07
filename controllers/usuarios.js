@@ -104,6 +104,9 @@ const usuariosPatch=(req=request,res=response)=>{
     })
 }
 const usuariosDelete=async (req=request,res=response)=>{
+   
+   try {
+       
     //para eliminar usuario fisicamente pero no es conveniente por que se pierde
     //despues lo que hizo
     const {id} =req.params;
@@ -117,13 +120,22 @@ const usuariosDelete=async (req=request,res=response)=>{
     //en req no lo obtenemos desde el validar token 
     const usuarioAutenticado=req.usuario;
     //ponemos primero el id donde lo va buscar y luego decimos que va modificar
-    res.json({
-            msg:"Usuario eliminado",
+     return res.status(200).json({
+            msg:`Usuario Eliminado ${usuario._id}<br>${usuario.nombre}`,
             usuario,
             uid,
             usuarioAutenticado
         });
     }
+catch (error) {
+    return res.status(401).json({
+
+        msg: `Puto Error ${error}`
+    })   
+   
+}
+}
+
 //siempre debemos impprtar lo que vamos a separar
 module.exports={
    usuariosGet,

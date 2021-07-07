@@ -25,7 +25,7 @@ router.get('/', usuariosGet);
 //hacemos validaciones para el id si existe o si es valido el id de mongo
 router.put('/:id', [
     //aqui hacemos si el id es un valor de object
-    check('id', "Este id no es valiudo").isMongoId(),
+    check('id', "Este id no es valido").isMongoId(),
     //hacemos una vaidacion si existe el id
     check('id').custom(idExiste),
     check('rol').custom(rolValidacion),
