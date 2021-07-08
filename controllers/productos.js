@@ -59,7 +59,10 @@ const crearProducto=async (req,res) => {
 
           
       } catch (error) {
-         console.log(`Ocurrio un error ${error}`); 
+         return res.status(400).json({
+             msg:`Ocurrio un error ${error}`,
+
+             }); 
       }
 }
 const obtenerProducto=async (req,res) => {
@@ -98,7 +101,7 @@ const actualizarProducto=async (req,res) => {
    const productoActualizado= await Producto.findByIdAndUpdate(id,resto,{new:true}); 
     return res.status(201).json({
 
-      msg:`Producto Actuliado Correctamente`,
+      msg:`Producto Actulizado Correctamente`,
       productoActualizado
     })
 

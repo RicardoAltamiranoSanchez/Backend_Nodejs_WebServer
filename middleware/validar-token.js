@@ -11,7 +11,8 @@ const validarToken= async (req=request,res=response,next) => {
 
         return res.status(401).json({
 
-            msg:"Token no valido"
+            msg:`\nPARA HACER ESTA VALIDACION\n
+            \nFALTA AUTENTICACIOIN DE TOKEN O TU TOKEN NO ES VALIDO.`
         });
     }
     try {

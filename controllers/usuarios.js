@@ -85,14 +85,18 @@ const usuariosPost= async (req ,res=response) => {
     
      //es un objeto usuario
      await usuario.save();
-     res.json({
+     return res.status(200).json({
         msg:"Su registro fue hecho correctamente",
         usuario 
-    });
-    console.log(Usuario)
+    })
+     console.log(Usuario)
         
     } catch (error) {
-        console.log(`Hubo un error inesperado checalo con el administrador ${error}`)
+        return res.status(401).json({
+
+        msg:`Hubo un error inesperado ${error}consulte con el admimistrador`,
+
+        })
         
     }    
 }

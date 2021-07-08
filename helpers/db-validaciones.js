@@ -14,13 +14,14 @@ const emailExiste = async(correo="") => {
 
     const existe= await Usuario.findOne({correo});
     if(existe){
-        throw new Error(`Este correo ya existe${correo}`)
+        throw new Error(`Este correo ya existe\n${correo} 
+        \nIngresa uno nuevo`)
     }
 }
 
 const idExiste=async (id) => {
    
-    //buscamos el objeto findById es una funcion especial de mongo para buscar id
+    //buscamos el objeto findById es una uncion especial de mongo para buscar id
     const existe=await Usuario.findById(id);
     //indicamos si no existe  
     if(!existe){
@@ -30,12 +31,20 @@ const idExiste=async (id) => {
 
 }
 const existeCategoriaPorId = async( id ) => {
-
-    // Verificar si el correo existe
+    try {
+        
+    // Verificar si existe categoria
     const existeCategoria = await Categoria.findById(id);
     if ( !existeCategoria ) {
         throw new Error(`El id no existe ${ id }`);
     }
+        
+
+
+    } catch (error) {
+     console.log(`Error en categoria la ruta de categorias ${error}`);   
+    }
+
 }
 module.exports={
 
