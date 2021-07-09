@@ -28,12 +28,10 @@ const obtenerProductos=async  (req,res)=>{
 
 const crearProducto=async (req,res) => {
       try {
-   
- 
       const {estado,usuario,...resto}=req.body;
-      const nombre =resto.nombre;
-      console.log(nombre);
-      const existeProducto=await Producto.findOne({nombre});
+      const nombreProducto =resto.nombreProducto;
+      console.log(nombreProducto);
+      const existeProducto=await Producto.findOne({nombreProducto});
 
       if(existeProducto){
            return res.status(201).json({
@@ -43,8 +41,9 @@ const crearProducto=async (req,res) => {
   
       const data={
           ...resto,
-          nombre:nombre.toUpperCase(),
-          usuario:req.usuario._id
+          nombre:nombreProducto.toUpperCase(),
+          usuario:req.usuario._id,
+          categoria:req.params.id
       }
       const producto= new Producto(data);
       await producto.save();

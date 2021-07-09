@@ -48,7 +48,7 @@ const obtenerCategorias = async (req,res=response)=>{
      
     try {
         
-     const {limite=10,desde=0}=req.query;
+     const {limite="",desde=0}=req.query;
      const query={estado:true}
      const [total,categoria]=await Promise.all([
                     Categoria.countDocuments(),

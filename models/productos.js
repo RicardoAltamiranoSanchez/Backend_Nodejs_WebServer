@@ -3,7 +3,7 @@ const{Schema,model}=require('mongoose');
 //hacemos el modelo de categorias 
 
 const SchemaProducto=Schema({
-    nombre: {
+    nombreProducto: {
         type: String,
         required: [true, 'El nombre es obligatorio'],
         unique: true
@@ -13,15 +13,25 @@ const SchemaProducto=Schema({
         default: true,
         required: true
     },
-    usuario: {
+ usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
     },
-    precio: {
+    precioProducto: {
         type: Number,
         default: 0
     },
+    marcaProducto: {
+        type:String,
+        trim:true,
+        
+    },
+    descripcionProducto: {
+        type:String,
+        trim:true,
+    },
+    
     categoria: {
         type: Schema.Types.ObjectId,
         ref: 'Categoria',

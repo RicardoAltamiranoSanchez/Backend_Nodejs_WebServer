@@ -18,13 +18,10 @@ router.get('/:id',[
     validarCampos
 ],obtenerProducto);
 
-router.post('/:id',[validarToken,existeCategoriaPorId],crearProducto);
+router.post('/:id',crearProducto);
 
 router.put('/:id',[check('id','Esto es un id de mongo').not().isMongoId(),validarToken],actualizarProducto);
 
 router.delete('/:id',[validarToken,validarRole],eliminarProducto);
-
-
-
 //siempre debemos impprtar lo que vamos a separar
 module.exports=router;
