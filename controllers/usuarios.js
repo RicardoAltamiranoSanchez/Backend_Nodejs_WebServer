@@ -60,9 +60,8 @@ const usuariosPut= async (req,res)=>{
     //Utilizamos  findByIdAndUpdate para actualizar indicamos primero el id y despues los que vamos a actulizar
     const usuario=  await Usuario.findByIdAndUpdate(id,resto);
 
-    res.json({
-       msg:"Desde de put",
-      usuario
+    return res.status(200).json({
+       msg:"Actualizacion Existosa"
 
     });
 }

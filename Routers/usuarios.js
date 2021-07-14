@@ -50,7 +50,7 @@ check("password", "La cotraseña debe tener mas de 6 caracteres").isLength({ min
     validarCampos], usuariosPost)
 
 //importamos check y hacemos la validacion de correo 
-router.patch('/', usuariosPatch);
+router.patch('/:id', usuariosPatch);
 router.delete('/:id', [validarToken,
     //validarRole,
     tieneRol('SUPER_USER', 'VENTAS_ROL'),

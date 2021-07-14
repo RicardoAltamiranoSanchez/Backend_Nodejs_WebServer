@@ -29,37 +29,37 @@ const obtenerProductos=async  (req,res)=>{
 const crearProducto=async (req,res) => {
       try {
       const {estado,usuario,...resto}=req.body;
-      const nombreProducto =resto.nombreProducto;
-      console.log(nombreProducto);
-      const existeProducto=await Producto.findOne({nombreProducto});
-
+      const nombre =resto.nombre;
+      console.log(nombre);
+      const existeProducto=await Producto.findOne({nombre});
+      console.log("Aqui buscamos si el producto y despues verificamos si existe el producto");
       if(existeProducto){
            return res.status(201).json({
                msg:`Este producto ya existe ${existeProducto}`,
        })         
       }
+      console.log('Pasamos la verificacion del producto');
   
       const data={
           ...resto,
-          nombre:nombreProducto.toUpperCase(),
+          nombre:nombre.toUpperCase(),
           usuario:req.usuario._id,
           categoria:req.params.id
       }
+      console.log("Ya hicimos el objeto");
       const producto= new Producto(data);
+      console.log("Aqui ya creamos el nuevo objeto ");
       await producto.save();
-      
+      console.log("Aqui ya lo guardamos");
       return res.status(201).json({
        msg:`Producto Creado `,
        producto
 
       })
 
-
-
-          
       } catch (error) {
          return res.status(400).json({
-             msg:`Ocurrio un error ${error}`,
+             msg:`Ocurrio un error  desde el post de producto (codigo)${error}`,
 
              }); 
       }

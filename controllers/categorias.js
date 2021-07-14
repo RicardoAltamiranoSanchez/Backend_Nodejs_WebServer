@@ -7,12 +7,12 @@ const agregarCategoria=async (req,res=response)=>{
 try {
     
     //solo obtenemos el nombre y lo convertimos en mayuscula para que cuando hagamos la busqueda sea mas facil
-    const nombre =req.body.nombre.toUpperCase();
+    const nombre=req.body.nombre.toUpperCase();
     //creamos una variable con el nombre de categoria y buscamos en la bd de categoria por el nombre aver si existe
     const categoriadb=await Categoria.findOne({nombre});
                            
      
-   //si existe ya la categoria respondemos un mensaje que si existe
+    //si existe ya la categoria respondemos un mensaje que si existe
     if(categoriadb){
      
 
@@ -63,7 +63,7 @@ const obtenerCategorias = async (req,res=response)=>{
          })
 
     } catch (error) {
-     console.log(`Ocurrio un error ${error}`);       
+     console.log(`Ocurrio un error desde el get de categorias${error}`);       
     }
 }
 
@@ -84,7 +84,7 @@ const obtenerCategoria=async (req,res=response) => {
         })
         
     } catch (error) {
-        console.log(`Ocurrio un error ${error}`)
+        console.log(`Ocurrio un error desde obtener categorias 2 ${error}`)
         
     }
 }
