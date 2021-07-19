@@ -2,6 +2,8 @@ const express=require('express');
 const cors=require('cors');
 const {dbConnection}=require ("../database/config")
 const bodyParser = require('body-parser');
+//liberira d esprpess para la funcion de subir archivos en el progarama
+const fileUpload = require('express-fileUpload');
 
 //estatus de error para regresar esos valores
 //res.status(200).json({msg:"Mensaje",})
@@ -17,7 +19,8 @@ class Server{
            buscar:'/Api/buscar',
            autenticacion:'/Api/authentication',
            produ:'/Api/productos',
-           categorias:'/Api/categorias'
+           categorias:'/Api/categorias',
+           playlods:'/Api/uploads'
        }
        //los path de forma de uno a uno
       // this.usuarioPath='/Api/Usuarios';    
@@ -33,6 +36,7 @@ class Server{
       //utilizamos el modelo vista controlador
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
+      this.app.use( fileUpload({ useTempFiles: true }) );
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
 
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
@@ -40,13 +44,18 @@ class Server{
       this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
       this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
       this.app.use(this.Paths.produ,require('../Routers/productos'));
+      this.app.use(this.Paths.playlods,require('../Routers/uploads.js'));
     }
     async  ConexionDB(){
            await dbConnection();
     }
     
     Middlewares() {
-    
+
+
+        
+
+
         this.app.use(express.static('public'));
        // la serializamos en formatto json para poder trabajar en json        
      
@@ -67,8 +76,13 @@ class Server{
 
     //      }
     //     this.app.use(cors(corsOptions));
+    // Note that this option available for versions 1.0.0 and newer. 
+
+
+
          this.app.use(cors());
         
+
     }
     Listen(){
          this.app.listen(this.PORT,() => {
@@ -79,3 +93,6 @@ class Server{
 
 
 module.exports=Server;
+//importante esto los parse en json es importante  
+// this.app.use( fileUpload({ useTempFiles: true }) ); Debemos iniciarlizado antes de json y de body parse para que no marque error
+// this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware se debe iniciar antes los path y debe ir adentro del router
