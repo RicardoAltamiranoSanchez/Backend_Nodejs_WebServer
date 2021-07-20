@@ -1,70 +1,52 @@
 //npm i express-fileupload para poder cargar archivos debemos instalar esta libreria
 //meter su middleware en el servidor 
-
+//Tambien debemos instalar el uuid para poner un id diferente a cada archivo npm i uuid
+//Se puede usar para cualquier cosas solo es crear un id unico
 const {response}=require('express');
-//para leer en donde estamos ubicados 
-const path = require('path');
+//no se necesita decir la ruta por que hicimos el index para que toda la ruta se importen de esta manera
+const {subirArchivo}=require('../helpers');
 
-const cargarArchivos= async (req, res=response) => {
+   const cargarArchivos= async (req, res=response) => {
     // el req.files es para ver los archivos 
     console.log(req.files);
-
-
-    //de decimos sino tienen nada y hace un a comparacion de la llaves  y si  el nombre del archivo esta vacio  que nos devuelva un errror
+     //de decimos sino tienen nada y hace un a comparacion de la llaves  y si  el nombre del archivo esta vacio  que nos devuelva un errror
     if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
-        return res.status(400).json({msg:'No hay ninngun archivo que subir',});
-       
-     }
-    //hacemos una destrutration con el archivo 
-      const {archivo}=req.files;
-
-      //la funcion split se para la palabras cuando encuentre el caracater que de pusimos aqui se paramos el archivo
-      const nombreCortado=archivo.name.split('.');
-      //Ponemos las opciones para valiadar las extensiones 
-      const extensionesValidas=['png','jpg','jpge','gif',];
-      //cortamos el nombre solo para abtener el nombre para su extension 
-      const extension=nombreCortado[nombreCortado.length-1];
-      //la funcion incluides es como un foreach pero busca un parametro dentro del  de decimos si no lo encuentra que nos  devuelva un error
-      if(!extensionesValidas.includes(extension)){
- 
- return res.status(400).json({ msg:`Esta extension ${extension} no es permitida intenta con estas otras ${extensionesValidas}`
-  
-           })
+        return res.status(400).json({msg:'No hay ninngun archivo que subir',});       
       }
- 
+   //Cuando retornamos una promesa simpre debemos utilizar un try  catch para el manejo de errores
+  
+      try {
+       
+      //Este es solo un ejemplo de nuestra funcion que sirve para usarse de diferente tipos de extension y crear un carpeta nueva que los contenga  
+      //const nombre=await subirArchivo(req.files,['txt','md'],"Textos");
+      // de ponemos undefined por que ya tenenmos parametros por defecto 
+      const nombre =await subirArchivo(req.files,undefined,"Imagenes");
+
+      return res.status(200).json({nombre})   
+   } catch (error) {
+       return res.status(400).json({
+         error
+       })  
+   }
+}
+const actualizarArchivo=async (req,res)=> {
+  const {id,coleccion}=req.params;
+
+
   return res.status(200).json({
- 
-     msg:extension
+     id,
+     coleccion,
+
   })
 
-    
-
-
-    
-    if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
-       return res.status(400).json({msg:'No hay ninngun archivo que subir',});
-      
-    }
-  
-   
-     const {archivo}=req.files;
-
-    //obtenemos el path completo de la ruta donde vamos a guadar el archivo
-    const  uploadPath =path.join(__dirname,'../uploads/',archivo.name);
-  
-    //De indicamos si hay un error que nos marque un errroi
-    archivo.mv(uploadPath, (err) =>{
-      if (err) {
-        return res.status(500).send(err);
-      }
-  
-      res.json({msg:'File uploaded to ' + uploadPath});
-    });
 
 
 
 }
 
-module.exports={cargarArchivos}
+module.exports={
+  cargarArchivos,
+  actualizarArchivo
+}
 
 

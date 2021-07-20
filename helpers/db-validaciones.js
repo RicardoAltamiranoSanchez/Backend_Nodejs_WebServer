@@ -46,10 +46,27 @@ const existeCategoriaPorId = async( id ) => {
     }
 
 }
+
+const collecionesPermitidas=  (coleccion ='',colecciones =[])=>{
+    
+    
+    const incluida=colecciones.includes(coleccion);
+
+    if(!incluida){
+        throw new Error(`La collecion ${coleccion} no es permitida ${colecciones}`);
+    }
+  //debemos poner return true para que no haiga un error de hecho en todas deben de ir   
+ return true;
+
+}
+
+
 module.exports={
 
     rolValidacion,
     emailExiste,
     idExiste,
-    existeCategoriaPorId
+    existeCategoriaPorId,
+    collecionesPermitidas
+
 }

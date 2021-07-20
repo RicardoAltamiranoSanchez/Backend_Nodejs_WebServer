@@ -36,7 +36,7 @@ class Server{
       //utilizamos el modelo vista controlador
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
-      this.app.use( fileUpload({ useTempFiles: true }) );
+      this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
 
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
