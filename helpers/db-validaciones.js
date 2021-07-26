@@ -46,8 +46,8 @@ const existeCategoriaPorId = async( id ) => {
     }
 
 }
-
-const collecionesPermitidas=  (coleccion ='',colecciones =[])=>{
+//Realizaba la verificacion si existe la colecion que no esta indicando el usuario de
+const colecionesPermitidas=  (coleccion ='',colecciones =[])=>{
     
     
     const incluida=colecciones.includes(coleccion);
@@ -67,6 +67,6 @@ module.exports={
     emailExiste,
     idExiste,
     existeCategoriaPorId,
-    collecionesPermitidas
+    colecionesPermitidas
 
 }

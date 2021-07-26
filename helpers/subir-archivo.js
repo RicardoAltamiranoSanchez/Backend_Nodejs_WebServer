@@ -23,14 +23,18 @@ const subirArchivo=(files,extensionesValidas=['PNG','jpg','jpge','gif',],carpeta
       const NuevoNombre=uuidv4()+'.'+extension;
      //obtenemos el path completo de la ruta donde vamos a guadar el archivo
      const  uploadPath =path.join(__dirname,'../uploads/',carpeta,NuevoNombre);
+     console.log("Desde la plantilla de subir archivo Iniciando...");
+     console.log(uploadPath);
+     console.log("Fin del  la plantilla de subir archivo");
      //De indicamos si hay un error que nos marque un errroi
+     //movemos el archivo al path importante aqui por siempre debemos mandar el nombre del archivo para despues hacer metodos con la imagen como actualizar
      archivo.mv(uploadPath, (err) =>{
        if (err) {
        
         return res.status(500).send(err);
        
     }
-       resolve('Archivo guardalo'+ uploadPath);
+       resolve( `${NuevoNombre}`);
      });
 //fin de la promesa        
     })
