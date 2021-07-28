@@ -1,3 +1,4 @@
+//Importante esta la libreria para utilizar el  servidor de cloudinary  debemos instalar npm i cloudinary
 //npm i express-fileupload para poder cargar archivos debemos instalar esta libreria
 //meter su middleware en el servidor 
 //Tambien debemos instalar el uuid para poner un id diferente a cada archivo npm i uuid
@@ -8,6 +9,10 @@ const {subirArchivo}=require('../helpers');
 const {Usuario,Producto}=require('../models');
 const path = require('path');
 const fs = require('fs');
+//Libreria para el uso del servidor para el resguardo de imagenes y videos y archivos etc;
+const cloudinary = require('cloudinary').v2
+//Hacemos la configuracion del  cloudinary para la conexion del servidor
+cloudinary.config(process.env.CLOUDINARY_URL);
 
    const cargarArchivos= async (req, res=response) => {
     // el req.files es para ver los archivos 
@@ -127,8 +132,6 @@ const obtenerArchivo=async (req,res) => {
        })
    }
    try {
-    
-    
   //Buscamos si existe una imagen el modelo que hicismo l a busqueda de antes
    if(modelo.img){
     //importante aqui por que tuve varios errores  debemos revisar bien que este bien el path para que haga la actualizacion 
@@ -138,27 +141,79 @@ const obtenerArchivo=async (req,res) => {
     //importamos fs es de systema con la funcion de existsSync verificamos si existe el path si nos da un true o false
    if(fs.existsSync(pathImagen)){
      return res.sendFile(pathImagen);      
-        }
+        } 
+      }        
+   
+      //Hacemos una funcion por si no hay una imagen en un usuario o producto y devolvemos una imagen por default para
+    //Esto debe de ir fuera cuando indiquemos si la imagen existe ya que no funciona,solo funciona cuando un objeto no tiene imagen
+          const pathImagen=path.join(__dirname, '../assets/default.jpg');
+        return  res.sendFile(pathImagen);        
 
-
-  return res.json({
-  msg:"Falta placeholder",
-  })      
-}
    } catch (error) {
      console.log("Error"+error);
    }
+}
 
+//Hacemos la funcion de actualizarArchivoCloudinary para el servidor de cloudinary guardamos la imagen en el servidor
+const actualizarArchivoCloudinary=async (req,res)=> {
+  
+  const {id,coleccion}=req.params;
+     
+    let modelo;
+    //Usamos el switc para verificar si existe las colecciones que existe en nuestra base de datos           
+     switch(coleccion) {
+        case "usuarios":
+          //Buscamos por el usuario si no da un valor lo verficiamos con el if y si no encontro nada no devuelve un mensaje
+          modelo= await Usuario.findById(id);
+          if(!modelo){
+            return res.status(500).json({
+            msg:`Este id no  existe ${id}`                
+            })
+          }
+        break;
+       case "productos": 
+       modelo=await Producto.findById(id);
+       if(!modelo){
+         return res.status(500).json({
 
+          msg:`Este id  ${id} no existe en la lista de productos`
+         })
+          
+       }
+       break;
+       default:
+         return res.status(500).json({
+             msg:`Falta unas evaluaciones por programar`
 
+           })
+     }
+    //Buscamos si existe una imagen el modelo que hicismo l a busqueda de antes
+     if(modelo.img){
+     
+     }
 
+          
+     const { tempFilePath}=req.files.archivo;
+      const  resp= await cloudinary.uploader.upload(tempFilePath);
+     console.log(resp);
+     res.json({resp});
 
+  // //aqui guardamos el path en la variabel imagen y el archivo lo subimos a una carpeta en nuestra base de datos
+  //  const imagen= await subirArchivo(req.files,undefined,coleccion);
+  //  //guardamos la informacion en en modelo de la imagen y luego lo guardamos 
+  //  modelo.img=imagen;
+  //  await modelo.save();
+  // return res.status(200).json({
+  //    msg:"Actualizacion de su imagen completa"
+
+  //  })
 
 }
 module.exports={
   cargarArchivos,
   actualizarArchivo,
-  obtenerArchivo
+  obtenerArchivo,
+  actualizarArchivoCloudinary
 }
 
 

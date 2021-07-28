@@ -4,7 +4,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 uuidv4(); 
 // Iniciamos los parametros para reutilizar el codigo para despues o otras rutas
-const subirArchivo=(files,extensionesValidas=['PNG','jpg','jpge','gif',],carpeta="") =>{
+const subirArchivo=(files,extensionesValidas=['PNG','jpg','jpge','gif','jfif'],carpeta="") =>{
      //Creamos una promesa para tener mayor control
     return new Promise((resolve, reject)=>{
         //hacemos una destrutration con el archivo 
@@ -30,7 +30,7 @@ const subirArchivo=(files,extensionesValidas=['PNG','jpg','jpge','gif',],carpeta
      //movemos el archivo al path importante aqui por siempre debemos mandar el nombre del archivo para despues hacer metodos con la imagen como actualizar
      archivo.mv(uploadPath, (err) =>{
        if (err) {
-       
+      
         return res.status(500).send(err);
        
     }
