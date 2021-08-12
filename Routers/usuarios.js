@@ -28,7 +28,7 @@ router.put('/:id', [
     check('id', "Este id no es valido").isMongoId(),
     //hacemos una vaidacion si existe el id
     check('id').custom(idExiste),
-    check('rol').custom(rolValidacion),
+  //  check('rol').custom(rolValidacion),
     validarCampos
 ], usuariosPut);
 //para meter una variable es o que lea una variable es con dos puntos y el id y alo puedes usar en el controlador

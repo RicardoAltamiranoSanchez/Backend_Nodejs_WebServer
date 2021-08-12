@@ -49,9 +49,10 @@ const usuariosPut= async (req,res)=>{
     const {id}=req.params;//con req.params y ponemos el nombre que pusimos en nuestra ruta
     //tambien se puede hacer destruturacion de los parametros 
     //ejemplo const {id,etc}=req.params;
-  
+   
     //Actualizamos sacamos el password y el correo y dejamos el resto con destrution
     const { _id , google , password , correo , ...resto}=req.body;
+    console.log(req.body);
     if(password){
     const salt = bcryptjs.genSaltSync();//encryptamos la contraseña 
     //luego hay problemas cuando intentamos inicial antes una varible antes de crearla
@@ -59,6 +60,7 @@ const usuariosPut= async (req,res)=>{
     }
     //Utilizamos  findByIdAndUpdate para actualizar indicamos primero el id y despues los que vamos a actulizar
     const usuario=  await Usuario.findByIdAndUpdate(id,resto);
+    
 
     return res.status(200).json({
        msg:"Actualizacion Existosa"
