@@ -51,7 +51,8 @@ const usuariosPut= async (req,res)=>{
     //ejemplo const {id,etc}=req.params;
    
     //Actualizamos sacamos el password y el correo y dejamos el resto con destrution
-    const { _id , google , password , correo , ...resto}=req.body;
+    //const { _id , google , password , correo , ...resto}=req.body;
+    const {_id,google, password,...resto}=req.body;
     console.log(req.body);
     if(password){
     const salt = bcryptjs.genSaltSync();//encryptamos la contraseña 
