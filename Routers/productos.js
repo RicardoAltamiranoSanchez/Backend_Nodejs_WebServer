@@ -20,7 +20,7 @@ router.get('/:id',[
 ],obtenerProducto);
 
 
-router.post('/:id',crearProducto);
+router.post('/:id',validarToken,crearProducto);
 router.put('/:id',[check('id','Esto es un id de mongo').not().isMongoId(),validarToken],actualizarProducto);
 router.delete('/:id',[validarToken,validarRole],eliminarProducto);
 //siempre debemos impprtar lo que vamos a separar

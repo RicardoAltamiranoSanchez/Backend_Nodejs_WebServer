@@ -46,6 +46,8 @@ const usuariosGet= async (req=request,res=response)=>{
 }
 
 const usuariosPut= async (req,res)=>{
+      try {
+          
     const {id}=req.params;//con req.params y ponemos el nombre que pusimos en nuestra ruta
     //tambien se puede hacer destruturacion de los parametros 
     //ejemplo const {id,etc}=req.params;
@@ -67,6 +69,20 @@ const usuariosPut= async (req,res)=>{
        msg:"Actualizacion Existosa"
 
     });
+
+
+
+
+      } catch (error) {
+        return res.status(500).json({
+      msg:"Error al actualizar nuevo registro, contactese con el administrador"
+
+    });
+
+      
+      }
+
+
 }
 const usuariosPost= async (req ,res=response) => {
     try {

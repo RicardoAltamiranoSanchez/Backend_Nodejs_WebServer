@@ -87,28 +87,26 @@ const obtenerProducto=async (req,res) => {
 
 const actualizarProducto=async (req,res) => {
    try {
-
       
    const {id}=req.params
    const {estado,usuario,...resto}=req.body;
    if(resto.nombre){
-
        resto.nombre=resto.nombre.toUpperCase();
     }
     resto.usuario=req.usuario._id;
-   
-   const productoActualizado= await Producto.findByIdAndUpdate(id,resto,{new:true}); 
-    return res.status(201).json({
+   const productoActualizado= await Producto.findByIdAndUpdate(id,resto,{new:true});
+return res.status(201).json({
 
       msg:`Producto Actulizado Correctamente`,
       productoActualizado
+
     })
-
    } catch (error) {
-    console.log(`Hubo un error ${error}`)   
-   }
+       return res.status(500).json({
+            msg:`Error al actualizar el producto comunicarse con el administrador ${error}`
+     }) 
+  }
 }
-
 const eliminarProducto=async (req,res) => {
 
     try {
