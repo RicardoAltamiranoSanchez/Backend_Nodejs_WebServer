@@ -22,14 +22,18 @@ class Server{
            categorias:'/Api/categorias',
            playlods:'/Api/uploads'
        }
-       //los path de forma de uno a uno
+
+       //Importante poner los middleware antes de lo routert por que no sale error en la validaciones de token 
+        //Creo que no puede arrancar las configuraciones si ya arranco el servidor antes no no arranca con toda las actualizacaciones
+          //no ponemos el lsten en el constructor
+    this.Middlewares();      
+ //los path de forma de uno a uno
       // this.usuarioPath='/Api/Usuarios';    
       // this.tokenPath='/Api/authentication';
       this.Router();
      //Conectando ala base de datos en mongo
      this.ConexionDB();
-    //no ponemos el lsten en el constructor
-    this.Middlewares();
+  
     }
     Router(){
       //Aqui usamos el middeware y el path que creamos para para no tener un codigo largo
@@ -37,7 +41,6 @@ class Server{
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
       this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
-      this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
 
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
       this.app.use(this.Paths.buscar,require('../Routers/buscar'));
@@ -52,7 +55,8 @@ class Server{
     
     Middlewares() {
 
-
+//Fehca 19 de agosto movi esto por que ccreo que encontre el error se debe cargar primero los middlewares y despues la base de datos
+      this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
         
 
 
