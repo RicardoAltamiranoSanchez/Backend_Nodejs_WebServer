@@ -10,7 +10,7 @@ try {
     const nombre=req.body.nombre.toUpperCase();
     //creamos una variable con el nombre de categoria y buscamos en la bd de categoria por el nombre aver si existe
     const categoriadb=await Categoria.findOne({nombre});
-                           
+    console.log(`Desde el inicio de actualizar en el backend ${nombre}`);                       
      
     //si existe ya la categoria respondemos un mensaje que si existe
     if(categoriadb){
@@ -22,7 +22,7 @@ try {
        }
     //sin no existe creamos una data con el nombre del usuario que esta ingresando el registro
     //y obtenenmops el id del usuario 
-
+console.log(`Desde el segundo de actualizar en el backend ${nombre}`);   
     const data={
         nombre,
         usuario:req.usuario._id
@@ -31,13 +31,14 @@ try {
        //Creamos un nuevo objeto de categoria con la informacion del dat y despues lo guardamos y respodemos un status de creacion de 201
       const categoria=new Categoria(data);
       await categoria.save();
-    
+    console.log(`Ahora es la data de actualizar en el backend ${data}`);   
      return res.status(201).json({
-      categoria
+     msg:`Categoria ${data.nombre} Creada con exito`
+      
     })
 
 } catch (error) {
-     console.log(error);    
+   return res.status(200).json({msg:"Hubo un error al momento de enviar los datos"});  
 }
 
 
@@ -129,8 +130,7 @@ const borrarCategoria=async (req,res=response)=>{
     const categoria=await Categoria.findByIdAndUpdate(id,query,{new:true});
     return res.status(201).json({
 
-        msg:"Categoria eliminada",
-        categoria
+        msg:"Categoria eliminada"
     }) 
 
 
