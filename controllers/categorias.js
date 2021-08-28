@@ -38,7 +38,7 @@ console.log(`Desde el segundo de actualizar en el backend ${nombre}`);
     })
 
 } catch (error) {
-   return res.status(200).json({msg:"Hubo un error al momento de enviar los datos"});  
+   return res.status(200).json({msg:"Hubo un error al momento de enviar los datos,Tal vez sea por que no haz iniciado sesión"});  
 }
 
 

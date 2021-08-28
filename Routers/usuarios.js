@@ -11,7 +11,8 @@ const {
 
     validarCampos,
     validarToken,
-    tieneRol
+    tieneRol,
+    validarRole
 
 } = require('../middleware')
 
@@ -23,7 +24,7 @@ const router = Router();
 
 router.get('/', usuariosGet);
 //hacemos validaciones para el id si existe o si es valido el id de mongo
-router.put('/:id', [
+router.put('/:id', [validarToken,
     //aqui hacemos si el id es un valor de object
     check('id', "Este id no es valido").isMongoId(),
     //hacemos una vaidacion si existe el id
@@ -52,8 +53,8 @@ check("password", "La cotraseña debe tener mas de 6 caracteres").isLength({ min
 //importamos check y hacemos la validacion de correo 
 router.patch('/:id', usuariosPatch);
 router.delete('/:id', [validarToken,
-    //validarRole,
-    tieneRol('SUPER_USER', 'VENTAS_ROL'),
+    validarRole,
+    //tieneRol('SUPER_USER', 'USER_ROL'),
     check('id', "Este id no es valiudo").isMongoId(),
     check('id').custom(idExiste),
     validarCampos

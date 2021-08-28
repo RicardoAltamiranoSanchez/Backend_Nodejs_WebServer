@@ -38,7 +38,7 @@ const validarCampos = ( req, res, next ) => {
     next();
           
       } catch (error) {
-        console.log(`Error en la validacion de errores en middleware ${erro}`);
+        console.log(`Error en la validacion de errores en middleware ${error}`);
       }
  
 }

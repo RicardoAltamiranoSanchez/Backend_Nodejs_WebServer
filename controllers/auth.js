@@ -18,7 +18,7 @@ const login = async(req, res = response) => {
         //de decimos si esta vacio
         if ( !usuario ) {
             return res.status(400).json({
-                msg: 'Usuario / Password no son correctos - correo'
+                msg: 'El Correo esta Incorrecto Intente de nuevo'
             });
         }
 
@@ -28,7 +28,7 @@ const login = async(req, res = response) => {
         //su informacion
         if ( !usuario.estado ) {
             return res.status(400).json({
-                msg: 'Usuario / Password no son correctos - estado: false'
+                msg: 'Este usuario no existe'
             });
         }
 
@@ -38,7 +38,7 @@ const login = async(req, res = response) => {
         const validPassword = bcryptjs.compareSync( password, usuario.password );
         if ( !validPassword ) {
             return res.status(400).json({
-                msg: 'Usuario / Password no son correctos - password'
+                msg: 'La contraseña esta Incorrecta Intente de nuevo'
             });
         }
       //verificar bien los nombres utilizamos el generar token del helpers 
