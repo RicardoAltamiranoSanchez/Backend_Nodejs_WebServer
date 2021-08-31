@@ -22,6 +22,7 @@ class Server{
            categorias:'/Api/categorias',
            playlods:'/Api/uploads'
        }
+ this.ConexionDB();
 
        //Importante poner los middleware antes de lo routert por que no sale error en la validaciones de token 
         //Creo que no puede arrancar las configuraciones si ya arranco el servidor antes no no arranca con toda las actualizacaciones
@@ -32,7 +33,7 @@ class Server{
       // this.tokenPath='/Api/authentication';
       this.Router();
      //Conectando ala base de datos en mongo
-     this.ConexionDB();
+    
   
     }
     Router(){
@@ -40,7 +41,7 @@ class Server{
       //utilizamos el modelo vista controlador
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
-      this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
+     
 
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
       this.app.use(this.Paths.buscar,require('../Routers/buscar'));
@@ -54,6 +55,7 @@ class Server{
     }
     
     Middlewares() {
+  this.app.use(cors());
 
 //Fehca 19 de agosto movi esto por que ccreo que encontre el error se debe cargar primero los middlewares y despues la base de datos
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
@@ -81,10 +83,15 @@ class Server{
     //      }
     //     this.app.use(cors(corsOptions));
     // Note that this option available for versions 1.0.0 and newer. 
+//this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
 
-
-
-         this.app.use(cors());
+ // Fileupload - Carga de archivos
+        this.app.use( fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        }));
+       
         
 
     }

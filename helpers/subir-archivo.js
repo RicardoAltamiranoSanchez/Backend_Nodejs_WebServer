@@ -5,7 +5,8 @@ const { v4: uuidv4 } = require('uuid');
 uuidv4(); 
 // Iniciamos los parametros para reutilizar el codigo para despues o otras rutas
 const subirArchivo=(files,extensionesValidas=['PNG','jpg','jpge','gif','jfif'],carpeta="") =>{
-     //Creamos una promesa para tener mayor control
+   try {
+ //Creamos una promesa para tener mayor control
     return new Promise((resolve, reject)=>{
         //hacemos una destrutration con el archivo 
        const {archivo}=files;
@@ -38,5 +39,12 @@ const subirArchivo=(files,extensionesValidas=['PNG','jpg','jpge','gif','jfif'],c
      });
 //fin de la promesa        
     })
+
+     
+   } catch (error) {
+    console.log("Error donde esta el helpers de subirArchivo"+error);
+     
+   }
+    
 }
 module.exports={subirArchivo};

@@ -3,16 +3,18 @@
 //meter su middleware en el servidor 
 //Tambien debemos instalar el uuid para poner un id diferente a cada archivo npm i uuid
 //Se puede usar para cualquier cosas solo es crear un id unico
+
+//Libreria para el uso del servidor para el resguardo de imagenes y videos y archivos etc;
+const cloudinary = require('cloudinary').v2;
+    //Hacemos la configuracion del  cloudinary para la conexion del servidor
+cloudinary.config(process.env.CLOUDINARY_URL);
 const { response } = require('express');
 //no se necesita decir la ruta por que hicimos el index para que toda la ruta se importen de esta manera
 const { subirArchivo } = require('../helpers');
 const { Usuario, Producto } = require('../models');
 const path = require('path');
 const fs = require('fs');
-//Libreria para el uso del servidor para el resguardo de imagenes y videos y archivos etc;
-const cloudinary = require('cloudinary').v2
-    //Hacemos la configuracion del  cloudinary para la conexion del servidor
-cloudinary.config(process.env.CLOUDINARY_URL);
+
 
 const cargarArchivos = async(req, res = response) => {
         // el req.files es para ver los archivos 
@@ -197,18 +199,26 @@ const actualizarArchivoCloudinary = async(req, res) => {
         //separamos el punto para obtenenr el id solamente 
         const [public_id] = nombre.split('.');
         //destruimos la imagen  para poner una nueva
-        cloudinary.uploader.destroy(public_id);
+        await cloudinary.uploader.destroy(public_id);
     }
+ try {
+     
 
     // Desde el cliene obtenemos el valor de tempFilePath ya que un path de un archivo temporal
     const { tempFilePath } = req.files.archivo;
+console.log(req.files.archivo);
     //subimo el valor en cloudinary y obtenemos el valor de secure_url  ya que es un id para poderlo meter en el campo de img del modelo
-    const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
+   //Importante tuve un error con cloudinary por la hora de mi lap debe estar  al corriente si no te sacara dolores de cabez
+ const {secure_url}= await cloudinary.uploader.upload (tempFilePath, 
+function (error, result) {
+console.log (result, error)
+});
+    
     //Metemos el id de cloudinary dentro de la img del modelo
     modelo.img = secure_url;
     //Lo guardamos en la base de datos
     await modelo.save();
-    res.json({ secure_url });
+    res.json({ msg:'Imagen guardala con Exito'});
 
     // //aqui guardamos el path en la variabel imagen y el archivo lo subimos a una carpeta en nuestra base de datos
     //  const imagen= await subirArchivo(req.files,undefined,coleccion);
@@ -220,6 +230,15 @@ const actualizarArchivoCloudinary = async(req, res) => {
 
     //  })
 
+
+
+
+
+ } catch (error) {
+     console.log("Error al subir la imagen en el servidor de imagenes"+error);     
+
+
+ }
 }
 module.exports = {
     cargarArchivos,
