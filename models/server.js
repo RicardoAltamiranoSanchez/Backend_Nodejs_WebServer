@@ -56,7 +56,13 @@ class Server{
     
     Middlewares() {
   this.app.use(cors());
-
+// Fileupload - Carga de archivos
+        this.app.use( fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        }));
+       
 //Fehca 19 de agosto movi esto por que ccreo que encontre el error se debe cargar primero los middlewares y despues la base de datos
       this.app.use( express.json());//importante poner este desde el inicio si no va aveer conflicto en rputr o middleware
         
@@ -85,13 +91,7 @@ class Server{
     // Note that this option available for versions 1.0.0 and newer. 
 //this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
 
- // Fileupload - Carga de archivos
-        this.app.use( fileUpload({
-            useTempFiles : true,
-            tempFileDir : '/tmp/',
-            createParentPath: true
-        }));
-       
+ 
         
 
     }
