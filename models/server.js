@@ -1,7 +1,7 @@
 const express=require('express');
 const cors=require('cors');
 const {dbConnection}=require ("../database/config")
-const bodyParser = require('body-parser');
+
 //liberira d esprpess para la funcion de subir archivos en el progarama
 const fileUpload = require('express-fileUpload');
 
