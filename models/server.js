@@ -1,8 +1,10 @@
 const express=require('express');
 const cors=require('cors');
-const {dbConnection}=require ("../database/config")
 
 //liberira d esprpess para la funcion de subir archivos en el progarama
+const fileUpload = require('express-fileUpload');
+const {dbConnection}=require ('../database/config')
+
 
 
 //estatus de error para regresar esos valores
@@ -36,20 +38,7 @@ class Server{
     
   
     }
-    Router(){
-      //Aqui usamos el middeware y el path que creamos para para no tener un codigo largo
-      //utilizamos el modelo vista controlador
-      //en require mandamos a llamar las rutas que vamos a ocupar 
-      //solo debemos poner el path
-     
-
-      this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
-      this.app.use(this.Paths.buscar,require('../Routers/buscar'));
-      this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
-      this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
-      this.app.use(this.Paths.produ,require('../Routers/productos'));
-      this.app.use(this.Paths.playlods,require('../Routers/uploads.js'));
-    }
+  
     async  ConexionDB(){
            await dbConnection();
     }
@@ -86,9 +75,28 @@ class Server{
 //this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
 
  // Fileupload - Carga de archivos
-    
+        this.app.use( fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        }));
+       
         
 
+    }
+  Router(){
+      //Aqui usamos el middeware y el path que creamos para para no tener un codigo largo
+      //utilizamos el modelo vista controlador
+      //en require mandamos a llamar las rutas que vamos a ocupar 
+      //solo debemos poner el path
+     
+
+      this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
+      this.app.use(this.Paths.buscar,require('../Routers/buscar'));
+      this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
+      this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
+      this.app.use(this.Paths.produ,require('../Routers/productos'));
+      this.app.use(this.Paths.playlods,require('../Routers/uploads.js'));
     }
     Listen(){
          this.app.listen(this.PORT,() => {
