@@ -3,7 +3,7 @@ const cors=require('cors');
 const {dbConnection}=require ("../database/config")
 
 //liberira d esprpess para la funcion de subir archivos en el progarama
-const fileUpload = require('express-fileUpload');
+
 
 //estatus de error para regresar esos valores
 //res.status(200).json({msg:"Mensaje",})
@@ -13,15 +13,7 @@ class Server{
        this.app=express();
        this.PORT=process.env.PORT;
        //Creamos los paths en un objeto para no hacer lo tan tardo
-       this.Paths={
-
-           usuarios:'/Api/Usuarios',
-           buscar:'/Api/buscar',
-           autenticacion:'/Api/authentication',
-           produ:'/Api/productos',
-           categorias:'/Api/categorias',
-           playlods:'/Api/uploads'
-       }
+    
  this.ConexionDB();
 
        //Importante poner los middleware antes de lo routert por que no sale error en la validaciones de token 
