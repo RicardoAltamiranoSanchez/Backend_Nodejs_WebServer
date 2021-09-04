@@ -4,7 +4,7 @@
   "description": "Servidor de administracion y productos",
   "main": "index.js",
   "scripts": {
-    "start": "node app2.js"
+    "start": "node app2"
   },
   "keywords": [],
   "author": "Ricardo Altamirano Sanschez",
