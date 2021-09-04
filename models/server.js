@@ -2,7 +2,7 @@ const express=require('express');
 const cors=require('cors');
 
 //liberira d esprpess para la funcion de subir archivos en el progarama
-const fileUpload = require('express-fileUpload');
+
 const {dbConnection}=require ('../database/config')
 
 
@@ -75,12 +75,7 @@ class Server{
 //this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
 
  // Fileupload - Carga de archivos
-        this.app.use( fileUpload({
-            useTempFiles : true,
-            tempFileDir : '/tmp/',
-            createParentPath: true
-        }));
-       
+     
         
 
     }
