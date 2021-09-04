@@ -13,15 +13,7 @@ class Server{
        this.app=express();
        this.PORT=process.env.PORT;
        //Creamos los paths en un objeto para no hacer lo tan tardo
-       this.Paths={
-
-           usuarios:'/Api/Usuarios',
-           buscar:'/Api/buscar',
-           autenticacion:'/Api/authentication',
-           produ:'/Api/productos',
-           categorias:'/Api/categorias',
-           playlods:'/Api/uploads'
-       }
+     
  this.ConexionDB();
 
        //Importante poner los middleware antes de lo routert por que no sale error en la validaciones de token 
