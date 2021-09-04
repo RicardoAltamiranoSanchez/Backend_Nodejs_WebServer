@@ -1,13 +1,13 @@
 {
-  "name": "practica2-web",
+  "name": "servidorweb",
   "version": "1.0.0",
   "description": "Servidor de administracion y productos",
   "main": "index.js",
   "scripts": {
-    "start": "node app2"
+    "start": "npm start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ricardo Altamirano Sanschez",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
