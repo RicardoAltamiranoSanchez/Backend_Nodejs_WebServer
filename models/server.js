@@ -2,7 +2,7 @@ const express=require('express');
 const cors=require('cors');
 const fileUpload = require('express-fileupload');
 //liberira d esprpess para la funcion de subir archivos en el progarama
-
+//jdj
 const {dbConnection}=require ('../database/config')
 
 
