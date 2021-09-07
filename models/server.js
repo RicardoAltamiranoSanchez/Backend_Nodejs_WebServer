@@ -1,6 +1,6 @@
 const express=require('express');
 const cors=require('cors');
-
+const fileUpload = require('express-fileUpload');
 //liberira d esprpess para la funcion de subir archivos en el progarama
 
 const {dbConnection}=require ('../database/config')
@@ -85,7 +85,7 @@ class Server{
       //en require mandamos a llamar las rutas que vamos a ocupar 
       //solo debemos poner el path
      
-
+   this.app.use( fileUpload({ useTempFiles: true,createParentPath:true }) );
       this.app.use(this.Paths.autenticacion,require('../Routers/auth'));
       this.app.use(this.Paths.buscar,require('../Routers/buscar'));
       this.app.use(this.Paths.usuarios,require('../Routers/usuarios'));
