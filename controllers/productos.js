@@ -4,8 +4,9 @@ const {Categoria,Producto}=require('../models');
 
 const obtenerProductos=async  (req,res)=>{
 
-      try {        
-    const {limite=10,desde=0}=req.query;
+      try {
+           // const {limite=10,desde=0}=req.query;
+    const {desde=0}=req.query;
     const query={estado:true};
     const [total,productos]=await Promise.all([
                     Producto.countDocuments(query),
