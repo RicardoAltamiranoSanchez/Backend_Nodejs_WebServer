@@ -13,7 +13,7 @@ const obtenerProductos=async  (req,res)=>{
                     .populate('usuario','nombre')
                     .populate('categoria','nombre')
                     .skip(desde)
-                    .limit(limite)
+                  //  .limit(limite)
     ]);
     return res.status(200).json({
         msg:`Todos los productos registrados ${total}`,
