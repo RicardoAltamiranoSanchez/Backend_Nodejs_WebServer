@@ -22,7 +22,8 @@ class Server{
            autenticacion:'/Api/authentication',
            produ:'/Api/productos',
            categorias:'/Api/categorias',
-           playlods:'/Api/uploads'
+           playlods:'/Api/uploads',
+           playeras:'/Api/playeras',
        }
  this.ConexionDB();
 
@@ -92,6 +93,7 @@ class Server{
       this.app.use(this.Paths.categorias,require('../Routers/categorias')); 
       this.app.use(this.Paths.produ,require('../Routers/productos'));
       this.app.use(this.Paths.playlods,require('../Routers/uploads.js'));
+      this.app.use(this.Paths.playeras,require('../Routers/playeras'));
     }
     Listen(){
          this.app.listen(this.PORT,() => {

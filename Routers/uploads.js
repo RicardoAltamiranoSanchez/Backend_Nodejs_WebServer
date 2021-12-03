@@ -14,14 +14,14 @@ router.post('/',validarArchivo,cargarArchivos);
 //realizamos la verificacion del id y el nombre de la collecion que queremos buscar
 router.put('/:coleccion/:id',[validarArchivo,
 check('id','Debe ser un id de mongo').isMongoId(),
-check('coleccion').custom( c => colecionesPermitidas( c, ["usuarios","productos"] )),
+check('coleccion').custom( c => colecionesPermitidas( c, ["usuarios","productos","playeras"] )),
 validarCampos],actualizarArchivoCloudinary);
  
 //Obtenemos las imagenes de nuestra base de datos
 
 router.get('/:coleccion/:id',[
     check('id','Debe ser un id de mongo').isMongoId(),
-    check('coleccion').custom( c => colecionesPermitidas( c, ["usuarios","productos"] )),
+    check('coleccion').custom( c => colecionesPermitidas( c, ["usuarios","productos","playeras"] )),
     validarCampos],obtenerArchivo);
 
 

@@ -20,7 +20,7 @@
     "google-auth-library": "^7.0.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
-    "nodemon": "^2.0.12",
+    "nodemon": "^2.0.15",
     "require-stack": "^1.0.2",
     "uuid": "^8.3.2"
   },

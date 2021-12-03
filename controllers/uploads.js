@@ -11,7 +11,7 @@ cloudinary.config(process.env.CLOUDINARY_URL);
 const { response } = require('express');
 //no se necesita decir la ruta por que hicimos el index para que toda la ruta se importen de esta manera
 const { subirArchivo } = require('../helpers');
-const { Usuario, Producto } = require('../models');
+const { Usuario, Producto,Playeras} = require('../models');
 const path = require('path');
 const fs = require('fs');
 
@@ -158,37 +158,63 @@ const obtenerArchivo = async(req, res) => {
 
 //Hacemos la funcion de actualizarArchivoCloudinary para el servidor de cloudinary guardamos la imagen en el servidor
 const actualizarArchivoCloudinary = async(req, res) => {
+console.log("inciando el programa de imagenes");
 
     const { id, coleccion } = req.params;
-
+console.log(` el id  ${id} y la coleccion ${coleccion}`);
     let modelo;
-    //Usamos el switc para verificar si existe las colecciones que existe en nuestra base de datos           
-    switch (coleccion) {
-        case "usuarios":
-            //Buscamos por el usuario si no da un valor lo verficiamos con el if y si no encontro nada no devuelve un mensaje
-            modelo = await Usuario.findById(id);
-            if (!modelo) {
-                return res.status(500).json({
-                    msg: `Este id no  existe ${id}`
-                })
-            }
-            break;
-        case "productos":
-            modelo = await Producto.findById(id);
-            if (!modelo) {
-                return res.status(500).json({
 
-                    msg: `Este id  ${id} no existe en la lista de productos`
-                })
+    try {
+   //Inicio de try para verificar los errores en el servidor
 
-            }
-            break;
-        default:
+ //Usamos el switc para verificar si existe las colecciones que existe en nuestra base de datos           
+ switch (coleccion) {
+    case "usuarios":
+        //Buscamos por el usuario si no da un valor lo verficiamos con el if y si no encontro nada no devuelve un mensaje
+        modelo = await Usuario.findById(id);
+        if (!modelo) {
             return res.status(500).json({
-                msg: `Falta unas evaluaciones por programar`
-
+                msg: `Este id no  existe ${id}`
             })
+        }
+        break;
+    case "productos":
+        modelo = await Producto.findById(id);
+        if (!modelo) {
+            return res.status(500).json({
+
+                msg: `Este id  ${id} no existe en la lista de productos`
+            })
+
+        }
+        break;
+        
+    case "playeras":
+        modelo = await Playeras.findById(id);
+        if(!modelo){
+          return res.status(500).json({
+
+           msg:`Este id:${id} no existe o aun no se ha creado el producto `
+
+          })
+
+        }
+        break;
+    default:
+        return res.status(500).json({
+            msg: `Falta unas evaluaciones por programar en el servidor de imagenes`
+
+        })
+}
+
+
+
+
+     //Fin ddel try del servidor   
+    } catch (error) {
+        console.log("Error en el switch tipo de Error:" + error);
     }
+   
     //Buscamos si existe una imagen el modelo que hicismo l a busqueda de antes
     //limpiamos la imagen  donde esta el servidor y ponemos una nueva para no gastar memoria
     if (modelo.img) {
@@ -227,13 +253,7 @@ console.log (result, error)
     //  await modelo.save();
     // return res.status(200).json({
     //    msg:"Actualizacion de su imagen completa"
-
     //  })
-
-
-
-
-
  } catch (error) {
      console.log("Error al subir la imagen en el servidor de imagenes"+error);     
 
